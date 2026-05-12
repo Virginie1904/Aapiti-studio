@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aapiti · Studio Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --iv:#FAF7F0;--cr:#F2EDE0;--sd:#E4D8BF;--go:#C8A348;--gl:#D4B96A;--br:#8B6914;
+  --bk:#5C4A2A;--dk:#1C1814;--mi:#4A3F32;--sg:#7A9A72;
+  --bg:#16130F;--pn:#1F1B14;--bd:#302818;--tx:#D4C9A8;--mt:#7A6F5A;--ac:#C8A348;--hv:#28220F;
+  --red:#C0392B;--grn:#2E7D52;--blu:#1A5276;
+}
+body{background:var(--bg);font-family:'Jost',sans-serif;color:var(--tx);min-height:100vh;display:flex;flex-direction:column}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+
+/* ── TOP NAV ── */
+.topnav{display:flex;background:var(--pn);border-bottom:1px solid var(--bd);height:52px;align-items:stretch;flex-shrink:0;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;padding:0 20px;border-right:1px solid var(--bd);gap:10px;min-width:220px}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ac);letter-spacing:0.04em}
+.nav-logo-sub{font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mt)}
+.nav-tabs{display:flex;flex:1}
+.nav-tab{display:flex;align-items:center;gap:8px;padding:0 22px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mt);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;user-select:none}
+.nav-tab:hover{color:var(--tx);background:var(--hv)}
+.nav-tab.active{color:var(--ac);border-bottom-color:var(--ac);background:var(--hv)}
+.nav-tab .tab-icon{font-size:14px}
+.nav-right{display:flex;align-items:center;padding:0 16px;gap:8px;border-left:1px solid var(--bd)}
+.nav-badge{font-size:8.5px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ac);border:1px solid var(--bd);padding:3px 8px;border-radius:20px}
+
+/* ── LAYOUT ── */
+.app-body{display:flex;flex:1;min-height:0;overflow:hidden}
+.panel{display:none;flex:1;overflow:hidden}
+.panel.active{display:flex}
+
+/* ── SIDEBAR ── */
+.sidebar{width:300px;min-width:300px;background:var(--pn);border-right:1px solid var(--bd);display:flex;flex-direction:column;overflow-y:auto;height:calc(100vh - 52px);position:sticky;top:52px}
+.sb-section{padding:14px 16px;border-bottom:1px solid var(--bd)}
+.sb-section h3{font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--ac);margin-bottom:10px;font-weight:400}
+label{display:block;font-size:10px;color:var(--mt);margin-bottom:4px;letter-spacing:0.06em}
+input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:3px;color:var(--tx);font-family:'Jost',sans-serif;font-size:11px;padding:7px 9px;outline:none;transition:border .2s;resize:vertical}
+input[type=text]:focus,select:focus,textarea:focus,input[type=email]:focus,input[type=tel]:focus{border-color:var(--ac)}
+select option{background:var(--pn)}
+textarea{min-height:58px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.mb8{margin-bottom:8px}
+
+/* moment / palette pills */
+.pills{display:flex;flex-wrap:wrap;gap:5px}
+.pill{padding:5px 10px;font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--bd);color:var(--mt);border-radius:20px;cursor:pointer;transition:all .2s;user-select:none}
+.pill:hover{border-color:var(--ac);color:var(--ac)}
+.pill.active{background:var(--ac);border-color:var(--ac);color:#16130F;font-weight:500}
+
+/* palette presets */
+.pal-preset{display:flex;align-items:center;gap:8px;padding:7px 9px;border:1px solid var(--bd);border-radius:3px;cursor:pointer;transition:all .2s;margin-bottom:5px}
+.pal-preset:hover,.pal-preset.active{border-color:var(--ac);background:var(--hv)}
+.pal-dots{display:flex;gap:3px}
+.pal-dot{width:12px;height:12px;border-radius:50%}
+.pal-name{font-size:10.5px;color:var(--tx)}
+
+/* item rows */
+.item-row{display:flex;align-items:center;gap:6px;padding:5px 8px;background:rgba(255,255,255,.025);border:1px solid var(--bd);border-radius:3px;margin-bottom:4px}
+.item-row .il{flex:1;font-size:10.5px;cursor:pointer;line-height:1.3}
+.item-row input[type=checkbox]{accent-color:var(--ac);cursor:pointer}
+.item-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.del-btn{font-size:11px;color:var(--mt);cursor:pointer;padding:0 3px;transition:color .2s;flex-shrink:0}
+.del-btn:hover{color:var(--red)}
+
+/* buttons */
+.btn{padding:8px 14px;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;border-radius:3px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-primary{background:var(--ac);border:1px solid var(--ac);color:#16130F;font-weight:500}
+.btn-primary:hover{background:var(--gl)}
+.btn-outline{background:transparent;border:1px solid var(--ac);color:var(--ac)}
+.btn-outline:hover{background:var(--ac);color:#16130F}
+.btn-ghost{background:transparent;border:1px solid var(--bd);color:var(--mt)}
+.btn-ghost:hover{border-color:var(--mt);color:var(--tx)}
+.btn-block{width:100%;display:block;text-align:center;margin-bottom:5px}
+.btn-danger{background:transparent;border:1px solid #7B2D2D;color:#C0392B}
+.btn-danger:hover{background:#C0392B;color:white}
+.add-row{display:flex;gap:6px;margin-top:6px}
+.add-row input{flex:1}
+
+/* slot editor */
+.slot-ed-row{display:flex;align-items:center;gap:7px;padding:6px 8px;background:rgba(255,255,255,.025);border:1px solid var(--bd);border-radius:3px;margin-bottom:4px}
+.slot-num{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--ac);width:16px;flex-shrink:0;text-align:center}
+.slot-ed-info{flex:1;display:flex;flex-direction:column;gap:3px}
+.slot-ed-info input{font-size:10px;padding:4px 7px}
+.slot-thumb{width:36px;height:36px;border-radius:3px;border:1px solid var(--bd);overflow:hidden;cursor:pointer;flex-shrink:0;position:relative;background:var(--hv);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--mt)}
+.slot-thumb img{width:100%;height:100%;object-fit:cover}
+.slot-thumb input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+
+/* ── CONTENT AREA ── */
+.content{flex:1;overflow-y:auto;padding:28px}
+.content-inner{max-width:900px;margin:0 auto}
+
+/* ── MOODBOARD PANEL ── */
+.preview-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.preview-label{font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--mt)}
+.preview-actions{display:flex;gap:8px}
+
+/* MOODBOARD */
+#moodboard{background:var(--iv);border-radius:5px;padding:40px 44px 36px;box-shadow:0 24px 64px rgba(0,0,0,.6);position:relative}
+.mb-stripe{display:flex;height:4px;border-radius:2px;overflow:hidden;margin-bottom:28px}
+.mb-stripe span{flex:1}
+.mb-hdr{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:20px;margin-bottom:22px;border-bottom:1px solid var(--sd)}
+.mb-brand{display:flex;flex-direction:column;gap:3px}
+.mb-lbl{font-size:8.5px;letter-spacing:0.35em;text-transform:uppercase;color:var(--br)}
+.mb-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--dk);line-height:1.1}
+.mb-title em{font-style:italic;color:var(--br)}
+.mb-tags{display:flex;flex-direction:column;gap:5px;align-items:flex-end;padding-top:5px}
+.mb-tag{font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;padding:3px 10px;border:1px solid var(--go);color:var(--br);border-radius:20px}
+.mb-kws{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:20px}
+.mb-kw-lbl{font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--br);margin-right:4px}
+.mb-kw{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--mi)}
+.mb-kw-dot{width:3px;height:3px;border-radius:50%;background:var(--go)}
+.mb-grid{display:grid;gap:8px;margin-bottom:12px;grid-template-columns:1fr 1fr 1fr;grid-template-rows:220px 175px 155px}
+.mb-slot{border-radius:3px;overflow:hidden;position:relative;background:var(--cr);display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px dashed transparent;transition:border-color .2s}
+.mb-slot:hover{border-color:var(--go)}
+.mb-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.mb-slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.mb-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px;text-align:center;pointer-events:none}
+.mb-ph-icon{font-size:20px;opacity:.35}
+.mb-ph-name{font-size:8.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mi);opacity:.65;line-height:1.4}
+.mb-slot-lbl{position:absolute;bottom:0;left:0;right:0;padding:7px 10px;background:linear-gradient(transparent,rgba(28,24,20,.72));font-size:8.5px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,.9);pointer-events:none}
+.mb-pal-row{background:var(--cr);border-radius:3px;padding:16px 20px;margin-bottom:16px;display:flex;gap:24px;align-items:center}
+.mb-pal-ttl{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:0.13em;font-weight:400;color:var(--mi);text-transform:uppercase;writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+.mb-swatches{display:flex;gap:11px;flex-wrap:wrap;flex:1}
+.mb-sw{display:flex;flex-direction:column;align-items:center;gap:5px}
+.mb-sw-dot{width:38px;height:38px;border-radius:50%;border:1px solid rgba(0,0,0,.06)}
+.mb-sw-name{font-size:7.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mi);text-align:center;line-height:1.3}
+.mb-quote{text-align:center;padding:16px 50px;margin-bottom:16px;position:relative}
+.mb-quote::before,.mb-quote::after{content:'';position:absolute;top:50%;transform:translateY(-50%);width:50px;height:1px;background:var(--go)}
+.mb-quote::before{left:0}.mb-quote::after{right:0}
+.mb-quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--br);line-height:1.5}
+.mb-specs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--sd);border-radius:3px;overflow:hidden;margin-bottom:16px}
+.mb-spec{background:var(--iv);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.mb-spec-icon{font-size:14px}
+.mb-spec-ttl{font-size:7.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--br)}
+.mb-spec-val{font-family:'Cormorant Garamond',serif;font-size:12.5px;color:var(--dk);line-height:1.35}
+.mb-notes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.mb-note{background:var(--cr);border-left:3px solid var(--go);padding:14px 16px;border-radius:0 3px 3px 0}
+.mb-note h4{font-size:7.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--br);margin-bottom:8px;font-weight:400}
+.mb-note ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+.mb-note li{font-size:10.5px;color:var(--mi);line-height:1.4;padding-left:12px;position:relative}
+.mb-note li::before{content:'▸';position:absolute;left:0;color:var(--go);font-size:7px;top:2px}
+.mb-footer{display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid var(--sd)}
+.mb-footer-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:var(--mi)}
+.mb-footer-c{font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--br);text-align:right;line-height:1.6}
+
+/* ── AUDIT PANEL ── */
+.audit-wrap{max-width:820px;margin:0 auto}
+.audit-hdr{text-align:center;padding:32px 0 28px;border-bottom:1px solid var(--bd);margin-bottom:28px}
+.audit-hdr h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--ac);margin-bottom:6px}
+.audit-hdr p{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mt)}
+.audit-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px}
+.audit-meta-card{background:var(--pn);border:1px solid var(--bd);border-radius:4px;padding:14px 16px}
+.audit-meta-card label{color:var(--ac);font-size:9px;letter-spacing:0.2em;margin-bottom:6px}
+.audit-section{margin-bottom:24px}
+.audit-section-ttl{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--bd)}
+.audit-section-letter{width:28px;height:28px;border-radius:50%;background:var(--ac);color:#16130F;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.audit-section-ttl h3{font-size:13px;font-weight:400;color:var(--tx)}
+.audit-criterion{background:var(--pn);border:1px solid var(--bd);border-radius:4px;padding:14px 16px;margin-bottom:8px}
+.audit-criterion h4{font-size:11px;font-weight:500;color:var(--tx);margin-bottom:3px}
+.audit-criterion p{font-size:10px;color:var(--mt);margin-bottom:10px;line-height:1.5}
+.stars{display:flex;gap:6px}
+.star{width:32px;height:32px;border-radius:4px;border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--mt);transition:all .2s;user-select:none}
+.star:hover{border-color:var(--ac)}
+.star.active{background:var(--ac);border-color:var(--ac);color:#16130F;font-weight:600}
+.star-label{font-size:9px;color:var(--mt);margin-left:10px;align-self:center}
+.obs-area{width:100%;margin-top:10px;background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:3px;color:var(--tx);font-family:'Jost',sans-serif;font-size:11px;padding:8px 10px;min-height:60px;resize:vertical}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.check-opt{display:flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--bd);border-radius:3px;cursor:pointer;transition:all .2s;user-select:none}
+.check-opt:hover{border-color:var(--ac)}
+.check-opt.active{border-color:var(--ac);background:rgba(200,163,72,.1)}
+.check-opt span{font-size:10px;color:var(--tx)}
+.score-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:var(--pn);border:1px solid var(--bd);border-radius:4px;padding:16px;margin-bottom:16px}
+.score-item{display:flex;flex-direction:column;align-items:center;gap:6px}
+.score-letter{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mt)}
+.score-val{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--ac)}
+.score-max{font-size:9px;color:var(--mt)}
+.score-global{grid-column:1/-1;background:rgba(200,163,72,.08);border:1px solid var(--ac);border-radius:3px;padding:10px;display:flex;justify-content:space-between;align-items:center}
+.score-global-val{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ac)}
+.score-global-lbl{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mt)}
+.priority-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.priority-badge{padding:4px 10px;border-radius:20px;font-size:9px;letter-spacing:0.1em;text-transform:uppercase}
+.p-high{background:rgba(46,125,82,.15);border:1px solid var(--grn);color:#5DBF89}
+.p-mid{background:rgba(200,163,72,.1);border:1px solid var(--ac);color:var(--ac)}
+.p-low{background:rgba(74,63,50,.2);border:1px solid var(--bd);color:var(--mt)}
+
+/* ── OFFRE PANEL ── */
+.offre-wrap{max-width:820px;margin:0 auto}
+.offre-doc{background:var(--iv);border-radius:5px;padding:44px 48px;box-shadow:0 24px 64px rgba(0,0,0,.6);color:var(--dk)}
+.offre-doc h1{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--dk);margin-bottom:4px}
+.offre-doc .conf{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--br);margin-bottom:24px;display:block}
+.offre-section{margin-bottom:20px}
+.offre-section h2{font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--br);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--sd)}
+.offre-section p{font-size:12px;color:var(--mi);line-height:1.6}
+.offre-table{width:100%;border-collapse:collapse;margin-top:8px}
+.offre-table th{background:#8B6914;color:white;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:8px 10px;text-align:left}
+.offre-table td{font-size:11px;padding:9px 10px;color:var(--mi);border-bottom:1px solid var(--sd);vertical-align:top}
+.offre-table tr:nth-child(even) td{background:var(--cr)}
+.offre-highlight{background:rgba(139,105,20,.08);border:1px solid var(--go);border-radius:4px;padding:16px 18px;margin-top:12px}
+.offre-highlight h3{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--br);margin-bottom:6px}
+.offre-highlight p{font-size:11.5px;color:var(--mi);line-height:1.6}
+.editable{outline:none;border-bottom:1px dashed var(--go);min-width:60px;display:inline;cursor:text}
+.editable:focus{border-bottom-color:var(--ac);background:rgba(200,163,72,.06)}
+.offre-actions{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+
+/* ── REPERTOIRE ── */
+.rep-wrap{max-width:960px;margin:0 auto}
+.rep-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+.rep-filter-lbl{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mt);margin-right:4px}
+.rep-table-wrap{overflow-x:auto;border-radius:4px;border:1px solid var(--bd)}
+.rep-table{width:100%;border-collapse:collapse;min-width:900px}
+.rep-table th{background:var(--pn);font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ac);padding:10px 12px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;position:sticky;top:0}
+.rep-table td{font-size:11px;padding:10px 12px;border-bottom:1px solid var(--bd);vertical-align:top;line-height:1.4}
+.rep-table tr:hover td{background:var(--hv)}
+.stars-disp{color:var(--ac);font-size:11px}
+.badge{padding:3px 8px;border-radius:20px;font-size:8.5px;letter-spacing:0.1em;text-transform:uppercase;display:inline-block}
+.badge-5{background:rgba(200,163,72,.12);border:1px solid var(--ac);color:var(--ac)}
+.badge-4{background:rgba(74,63,50,.2);border:1px solid var(--bd);color:var(--mt)}
+.badge-buf{background:rgba(46,125,82,.12);border:1px solid var(--grn);color:#5DBF89}
+.badge-nob{background:rgba(74,63,50,.2);border:1px solid var(--bd);color:var(--mt)}
+.badge-unk{background:rgba(74,63,50,.1);border:1px solid var(--bd);color:var(--mt)}
+.contact-copy{font-size:10px;color:var(--ac);cursor:pointer;margin-left:4px}
+.contact-copy:hover{text-decoration:underline}
+.rep-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat-card{background:var(--pn);border:1px solid var(--bd);border-radius:4px;padding:14px;text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--ac)}
+.stat-lbl{font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mt);margin-top:3px}
+.search-input{padding:8px 12px;background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:3px;color:var(--tx);font-family:'Jost',sans-serif;font-size:11px;outline:none;width:220px}
+.search-input:focus{border-color:var(--ac)}
+
+/* ── STRATEGIE ── */
+.strat-wrap{max-width:760px;margin:0 auto}
+.strat-card{background:var(--pn);border:1px solid var(--bd);border-radius:5px;padding:22px 26px;margin-bottom:16px}
+.strat-card h3{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ac);margin-bottom:8px}
+.strat-card p{font-size:12px;color:var(--tx);line-height:1.65;margin-bottom:8px}
+.strat-card ul{padding-left:0;list-style:none}
+.strat-card li{font-size:11.5px;color:var(--mt);padding-left:16px;position:relative;margin-bottom:5px;line-height:1.5}
+.strat-card li::before{content:'▸';position:absolute;left:0;color:var(--ac);font-size:9px;top:2px}
+.quote-block{background:rgba(200,163,72,.06);border-left:3px solid var(--ac);padding:16px 20px;border-radius:0 4px 4px 0;margin:16px 0}
+.quote-block q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--ac);line-height:1.5}
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:16px;padding-bottom:20px;position:relative}
+.tl-item::before{content:'';position:absolute;left:14px;top:30px;bottom:0;width:1px;background:var(--bd)}
+.tl-item:last-child::before{display:none}
+.tl-dot{width:30px;height:30px;border-radius:50%;background:var(--ac);color:#16130F;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.tl-content{flex:1}
+.tl-content h4{font-size:12px;color:var(--tx);margin-bottom:4px;font-weight:500}
+.tl-content p{font-size:11px;color:var(--mt);line-height:1.5}
+
+/* ── OBJECTIONS ── */
+.obj-card{background:var(--pn);border:1px solid var(--bd);border-radius:4px;overflow:hidden;margin-bottom:8px}
+.obj-q{padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+.obj-q:hover{background:var(--hv)}
+.obj-q span{font-size:12px;color:var(--tx)}
+.obj-q .arr{color:var(--ac);transition:transform .2s;font-size:10px}
+.obj-q.open .arr{transform:rotate(180deg)}
+.obj-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s}
+.obj-a.open{max-height:200px;padding:12px 16px}
+.obj-a p{font-size:11.5px;color:var(--mt);line-height:1.6}
+
+/* PRINT */
+@media print{
+  .topnav,.sidebar,.preview-bar,.offre-actions,.rep-filters,.rep-stats{display:none!important}
+  .app-body{display:block}
+  .panel{display:block!important}
+  .panel:not(.active){display:none!important}
+  .content{padding:0;overflow:visible}
+  #moodboard,.offre-doc{box-shadow:none;max-width:100%}
+  body{background:white}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════
+     TOP NAV
+══════════════════════════ -->
+<nav class="topnav">
+  <div class="nav-logo">
+    <div>
+      <div class="nav-logo-text">Aapiti</div>
+      <div class="nav-logo-sub">Studio Pro</div>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" data-tab="moodboard"><span class="tab-icon">🎨</span> Moodboard</div>
+    <div class="nav-tab" data-tab="audit"><span class="tab-icon">📋</span> Audit Terrain</div>
+    <div class="nav-tab" data-tab="offre"><span class="tab-icon">📄</span> Offre & Tarifs</div>
+    <div class="nav-tab" data-tab="repertoire"><span class="tab-icon">🏨</span> Répertoire Hôtels</div>
+    <div class="nav-tab" data-tab="strategie"><span class="tab-icon">🎯</span> Stratégie & Objections</div>
+  </div>
+  <div class="nav-right">
+    <span class="nav-badge">v2.0 · 2026</span>
+  </div>
+</nav>
+
+<div class="app-body">
+
+<!-- ══════════════════════════════════════
+     PANEL 1 : MOODBOARD
+══════════════════════════════════════ -->
+<div class="panel active" id="panel-moodboard">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sb-section">
+      <h3>Identité</h3>
+      <div class="mb8"><label>Nom de l'hôtel</label><input type="text" id="hotelName" value="Hôtellerie 5★ · Île Maurice"></div>
+      <div class="mb8"><label>Accroche</label><input type="text" id="hotelSub" value="Fraîcheur &amp; Éveil"></div>
+      <label>Moment</label>
+      <div class="pills" id="momentPills">
+        <span class="pill active" data-m="petit-dejeuner">Petit-déj.</span>
+        <span class="pill" data-m="dejeuner">Déjeuner</span>
+        <span class="pill" data-m="diner">Dîner</span>
+        <span class="pill" data-m="brunch">Brunch</span>
+        <span class="pill" data-m="cocktail">Cocktail</span>
+      </div>
+    </div>
+    <div class="sb-section">
+      <h3>Palette</h3>
+      <div id="palPresets"></div>
+    </div>
+    <div class="sb-section">
+      <h3>Cases photo</h3>
+      <p style="font-size:9.5px;color:var(--mt);margin-bottom:8px;line-height:1.5">Cliquez l'icône photo d'une case pour y charger votre image.</p>
+      <div id="slotEd"></div>
+    </div>
+    <div class="sb-section">
+      <h3>Éléments du buffet</h3>
+      <div id="itemsList"></div>
+      <div class="add-row"><input type="text" id="newItem" placeholder="Ajouter…"><button class="btn btn-outline" onclick="addItem()">+</button></div>
+    </div>
+    <div class="sb-section">
+      <h3>Techniques</h3>
+      <div id="techList"></div>
+      <div class="add-row"><input type="text" id="newTech" placeholder="Ajouter…"><button class="btn btn-outline" onclick="addTech()">+</button></div>
+    </div>
+    <div class="sb-section">
+      <h3>Textes</h3>
+      <div class="mb8"><label>Mots-clés (séparés par ·)</label><input type="text" id="keywords" value="Lumière dorée · Légèreté · Fraîcheur mauricienne · Photographiable"></div>
+      <div class="mb8"><label>Citation</label><textarea id="quote">Donner envie de commencer la journée avec légèreté et identité mauricienne</textarea></div>
+      <div><label>Contact pied de page</label><input type="text" id="contact" value="virginie.dcml@gmail.com · +230 57 83 78 22"></div>
+    </div>
+    <div class="sb-section">
+      <button class="btn btn-primary btn-block" onclick="applyAll()">✦ Mettre à jour</button>
+      <button class="btn btn-ghost btn-block" onclick="window.print()">⎙ Imprimer / PDF</button>
+      <button class="btn btn-ghost btn-block" onclick="saveJSON()">💾 Sauvegarder</button>
+      <button class="btn btn-ghost btn-block" onclick="document.getElementById('loadFile').click()">📂 Charger</button>
+      <input type="file" id="loadFile" accept=".json" style="display:none" onchange="loadJSON(event)">
+    </div>
+  </aside>
+
+  <!-- Preview -->
+  <div class="content">
+    <div class="preview-bar">
+      <span class="preview-label">Aperçu Moodboard</span>
+      <div class="preview-actions">
+        <button class="btn btn-ghost" onclick="applyAll()">↺ Actualiser</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimer / PDF</button>
+      </div>
+    </div>
+    <div id="moodboard">
+      <div class="mb-stripe" id="mbStripe"></div>
+      <div class="mb-hdr">
+        <div class="mb-brand">
+          <span class="mb-lbl">Aapiti Consulting · Scénographie Culinaire · Île Maurice</span>
+          <h1 class="mb-title">Buffet <em id="mbEm">Petit-Déjeuner</em></h1>
+          <span class="mb-lbl" id="mbHotel" style="margin-top:3px"></span>
+        </div>
+        <div class="mb-tags">
+          <span class="mb-tag" id="mbTag1">Fraîcheur &amp; Éveil</span>
+          <span class="mb-tag">Grazing Luxe Tropical</span>
+          <span class="mb-tag">Île Maurice · 2026</span>
+        </div>
+      </div>
+      <div class="mb-kws" id="mbKws"></div>
+      <div class="mb-grid" id="mbGrid"></div>
+      <div class="mb-pal-row"><span class="mb-pal-ttl">Palette chromatique</span><div class="mb-swatches" id="mbSwatches"></div></div>
+      <div class="mb-quote"><p id="mbQuote"></p></div>
+      <div class="mb-specs">
+        <div class="mb-spec"><span class="mb-spec-icon">📐</span><span class="mb-spec-ttl">Structure</span><span class="mb-spec-val">3 niveaux · +0 / +15 / +30 cm</span></div>
+        <div class="mb-spec"><span class="mb-spec-icon">🎨</span><span class="mb-spec-ttl">Palette</span><span class="mb-spec-val" id="mbSpecPal">Ivoire · Or · Sauge</span></div>
+        <div class="mb-spec"><span class="mb-spec-icon">🌿</span><span class="mb-spec-ttl">Végétal</span><span class="mb-spec-val">Feuilles bananier · Fleurs comestibles</span></div>
+        <div class="mb-spec"><span class="mb-spec-icon">✦</span><span class="mb-spec-ttl">Matières</span><span class="mb-spec-val">Lin · Céramique · Laiton · Rotin</span></div>
+      </div>
+      <div class="mb-notes">
+        <div class="mb-note"><h4 id="note1ttl">Éléments du buffet</h4><ul id="note1list"></ul></div>
+        <div class="mb-note"><h4 id="note2ttl">Techniques de dressage</h4><ul id="note2list"></ul></div>
+      </div>
+      <div class="mb-footer">
+        <span class="mb-footer-q">« Un buffet bien conçu ne se regarde pas. Il se vit. »</span>
+        <div class="mb-footer-c" id="mbContact"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL 2 : AUDIT
+══════════════════════════════════════ -->
+<div class="panel" id="panel-audit">
+  <div class="content" style="padding:28px 32px">
+  <div class="audit-wrap">
+    <div class="audit-hdr">
+      <h2>Kit Consulting F&B · Audit Terrain</h2>
+      <p>Outil d'observation et d'évaluation · Hôtellerie 4 & 5★ · Île Maurice</p>
+    </div>
+
+    <!-- Meta -->
+    <div class="audit-meta">
+      <div class="audit-meta-card"><label>Nom de l'hôtel</label><input type="text" id="a-hotel" placeholder="ex : One&Only Le Saint Géran"></div>
+      <div class="audit-meta-card"><label>Date de visite</label><input type="text" id="a-date" placeholder="jj/mm/aaaa"></div>
+      <div class="audit-meta-card"><label>Repas observé</label>
+        <select id="a-repas"><option>Petit-déjeuner buffet</option><option>Déjeuner</option><option>Dîner</option><option>Brunch</option><option>Cocktail événementiel</option></select>
+      </div>
+      <div class="audit-meta-card"><label>Niveau perçu</label>
+        <select id="a-niveau"><option>5 étoiles</option><option>5 étoiles Palace</option><option>4 étoiles+</option><option>4 étoiles</option></select>
+      </div>
+      <div class="audit-meta-card" style="grid-column:1/-1"><label>Première impression générale</label>
+        <textarea id="a-impression" placeholder="Ambiance, clientèle, standing perçu à l'arrivée…"></textarea>
+      </div>
+    </div>
+
+    <!-- Section A -->
+    <div class="audit-section">
+      <div class="audit-section-ttl">
+        <div class="audit-section-letter">A</div>
+        <h3>Présentation & Mise en scène du buffet</h3>
+      </div>
+      <div id="secA"></div>
+      <div style="margin-top:10px"><label style="color:var(--ac)">Observations libres</label><textarea class="obs-area" id="obsA" placeholder="Ce qui vous a frappée, les lacunes évidentes, les bonnes surprises…"></textarea></div>
+    </div>
+
+    <!-- Section B -->
+    <div class="audit-section">
+      <div class="audit-section-ttl">
+        <div class="audit-section-letter">B</div>
+        <h3>Expérience client & storytelling food</h3>
+      </div>
+      <div id="secB"></div>
+      <div style="margin-top:10px"><label style="color:var(--ac)">Opportunités de grazing identifiées</label><textarea class="obs-area" id="obsB" placeholder="Où auriez-vous intégré une table de grazing ? Quel format ? Quel thème ?"></textarea></div>
+    </div>
+
+    <!-- Section C -->
+    <div class="audit-section">
+      <div class="audit-section-ttl">
+        <div class="audit-section-letter">C</div>
+        <h3>Service & culture F&B de l'établissement</h3>
+      </div>
+      <div id="secC"></div>
+      <div style="margin-top:10px"><label style="color:var(--ac)">Signaux d'ouverture à l'innovation</label><textarea class="obs-area" id="obsC" placeholder="Des initiatives qui montrent une volonté d'évoluer ?"></textarea></div>
+    </div>
+
+    <!-- Section D -->
+    <div class="audit-section">
+      <div class="audit-section-ttl">
+        <div class="audit-section-letter">D</div>
+        <h3>Évaluation subjective · Potentiel pour votre offre</h3>
+      </div>
+      <div id="secD"></div>
+      <div style="margin-top:12px">
+        <label style="color:var(--ac)">Formats de grazing pertinents ici</label>
+        <div class="checkbox-group" id="grazingFormats"></div>
+      </div>
+    </div>
+
+    <!-- Score synthèse -->
+    <div style="margin-bottom:24px">
+      <h3 style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--ac);margin-bottom:12px">Synthèse des scores</h3>
+      <div class="score-bar" id="scoreBar">
+        <div class="score-item"><span class="score-letter">A · Présentation</span><span class="score-val" id="sA">—</span><span class="score-max">/ 25</span></div>
+        <div class="score-item"><span class="score-letter">B · Expérience</span><span class="score-val" id="sB">—</span><span class="score-max">/ 20</span></div>
+        <div class="score-item"><span class="score-letter">C · Service</span><span class="score-val" id="sC">—</span><span class="score-max">/ 15</span></div>
+        <div class="score-item"><span class="score-letter">D · Potentiel</span><span class="score-val" id="sD">—</span><span class="score-max">/ 5</span></div>
+        <div class="score-global"><span class="score-global-lbl">Score global · Priorité prospection</span><span class="score-global-val" id="sGlobal">—</span></div>
+      </div>
+      <div id="priorityZone"></div>
+    </div>
+
+    <!-- Verdict -->
+    <div class="strat-card" style="margin-bottom:16px">
+      <h3 style="font-size:14px">Verdict de consultante</h3>
+      <div class="mb8"><label>Argument principal à mettre en avant</label><textarea id="a-argument" placeholder="Qu'est-ce qui manque clairement et que vous pouvez apporter ?"></textarea></div>
+      <div class="row">
+        <div><label>Interlocuteur(s) à cibler</label><input type="text" id="a-interlo" placeholder="Directeur F&B, GM, Chef…"></div>
+        <div><label>Prochaine action</label><input type="text" id="a-action" placeholder="Email, RDV, démonstration…"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="exportAudit()">⎙ Exporter l'audit</button>
+      <button class="btn btn-ghost" onclick="resetAudit()">↺ Nouvel audit</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL 3 : OFFRE & TARIFS
+══════════════════════════════════════ -->
+<div class="panel" id="panel-offre">
+  <div class="content" style="padding:28px 32px">
+  <div class="offre-wrap">
+    <div class="offre-actions">
+      <button class="btn btn-primary" onclick="window.print()">⎙ Imprimer / PDF</button>
+      <button class="btn btn-ghost" onclick="copyOffre()">📋 Copier le texte</button>
+      <p style="font-size:10px;color:var(--mt);align-self:center">Cliquez sur les zones en surbrillance pour les modifier directement</p>
+    </div>
+    <div class="offre-doc" id="offreDoc">
+      <span class="conf">CONFIDENTIEL · V1.0 · Proposition de collaboration</span>
+      <h1>Consulting F&B & Grazing Experience</h1>
+
+      <div class="offre-section" style="margin-top:20px">
+        <h2>En-tête</h2>
+        <p>À l'attention de : <span class="editable" contenteditable="true">M. / Mme [Nom], Directeur F&B</span><br>
+        Hôtel : <span class="editable" contenteditable="true">[Nom de l'hôtel]</span><br>
+        Date : <span class="editable" contenteditable="true">[Date]</span><br>
+        De : <strong>Virginie Duc Meley</strong> · Consultante F&B, Spécialiste Scénographie Culinaire & Grazing</p>
+      </div>
+
+      <div class="offre-section">
+        <h2>Qui suis-je</h2>
+        <p>Forte de 4 ans d'expérience à la tête d'une société de traiteur spécialisée dans le grazing en France (Montpellier), j'ai accompagné des centaines d'événements privés et professionnels — mariages, cocktails corporate, séminaires — avec un positionnement haut de gamme axé sur l'expérience visuelle et gustative.<br><br>
+        Désormais installée à l'Île Maurice, je propose aux établissements hôteliers 4 et 5 étoiles d'intégrer le grazing à leur offre F&B : un format de présentation culinaire qui transforme un buffet en expérience mémorable et ultra-photographiable.</p>
+      </div>
+
+      <div class="offre-section">
+        <h2>Le contexte · Pourquoi maintenant</h2>
+        <p>Le grazing est l'une des tendances food les plus fortes depuis 5 ans en Europe, Australie et Amérique du Nord — et reste quasi-inexistant dans l'hôtellerie mauricienne. Dans un marché où la clientèle internationale est de plus en plus sensible à l'expérience visuelle et au partage sur les réseaux sociaux, une table de grazing bien orchestrée devient un outil marketing puissant et un générateur de revenus additionnel.<br><br>
+        Après avoir observé l'offre F&B de votre établissement, j'ai identifié <span class="editable" contenteditable="true">plusieurs opportunités concrètes</span> d'enrichir votre expérience client grâce à ce format.</p>
+      </div>
+
+      <div class="offre-section">
+        <h2>Ce que je propose · Mes services</h2>
+        <table class="offre-table">
+          <thead><tr><th>Service</th><th>Description</th><th>Format</th><th>Tarif</th></tr></thead>
+          <tbody>
+            <tr><td><strong>01 · Audit F&B Grazing</strong></td><td>Analyse de votre offre existante + rapport de recommandations illustré sous 72h</td><td>1 jour sur site</td><td>15 000 – 28 000 MUR</td></tr>
+            <tr><td><strong>02 · Formation Équipe F&B</strong></td><td>Atelier pratique — gestes dressage, colorimétrie, hauteurs, storytelling food (jusqu'à 8 pers.)</td><td>Demi-journée</td><td>25 000 – 45 000 MUR</td></tr>
+            <tr><td><strong>03 · Conception Buffet Grazing</strong></td><td>Moodboard, palette chromatique, plan buffet, dressage produit par produit, supervision J</td><td>À l'événement</td><td>22 000 – 40 000 MUR</td></tr>
+            <tr><td><strong>04 · Accompagnement Mensuel</strong></td><td>Renouvellement créatif saisonnier, montée en compétence équipes, veille tendances</td><td>Forfait mensuel</td><td>43 000 – 81 000 MUR</td></tr>
+          </tbody>
+        </table>
+        <div class="offre-highlight">
+          <h3>⭐ Pack Lancement · Offre combinée</h3>
+          <p>Audit + Formation + Conception d'un buffet + 1 mois d'accompagnement offert + Moodboard & charte visuelle + Plan d'action 12 mois<br>
+          <strong>Tarif : 80 000 – 130 000 MUR</strong> · Économie jusqu'à 30 000 MUR vs prestations séparées</p>
+        </div>
+      </div>
+
+      <div class="offre-section">
+        <h2>Proposition de démarrage · Sans risque</h2>
+        <p>Pour permettre à votre équipe de découvrir le concept sans engagement financier initial, je propose une <strong>session de démonstration gratuite de 2h</strong> : conception d'une mini-table de grazing sur un thème de votre choix, en présence de votre Chef et/ou Directeur F&B.<br><br>
+        À l'issue de cette démonstration, vous disposerez d'un premier aperçu concret de ce que le grazing peut apporter à votre établissement — et nous pourrons définir ensemble un partenariat adapté à vos besoins.</p>
+      </div>
+
+      <div class="offre-section">
+        <h2>Modalités pratiques</h2>
+        <p><strong>Tarification</strong> · Tous les tarifs sont en roupies mauriciennes (MUR) HT. Devis personnalisé après un premier échange de 20 min.<br>
+        <strong>Déplacement</strong> · Inclus à moins de 45 min de Grand Baie. Au-delà, forfait kilométrique.<br>
+        <strong>Acompte</strong> · 40 % à la signature. Solde à réception de facture (30 j. pour le mensuel).<br>
+        <strong>Annulation</strong> · Sans frais jusqu'à 72h. En deçà, 50 % du montant.<br>
+        <strong>Propriété intellectuelle</strong> · Concepts & moodboards restent propriété Aapiti — droit d'usage inclus pendant le contrat.</p>
+      </div>
+
+      <div class="offre-section">
+        <h2>Prochaine étape</h2>
+        <p>Je serais ravie d'échanger avec vous autour d'un café ou d'un appel de 20 minutes.<br><br>
+        <strong>virginie.dcml@gmail.com · +230 57 83 78 22 · www.aapiti.fr</strong><br><br>
+        Dans l'attente de votre retour, je vous adresse mes cordiales salutations.<br><br>
+        <em>Virginie Duc Meley · Aapiti Consulting · Scénographie Culinaire · Île Maurice</em></p>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL 4 : RÉPERTOIRE
+══════════════════════════════════════ -->
+<div class="panel" id="panel-repertoire">
+  <div class="content" style="padding:28px 32px">
+  <div class="rep-wrap">
+    <div class="rep-stats" id="repStats"></div>
+    <div class="rep-filters">
+      <span class="rep-filter-lbl">Filtres</span>
+      <input type="text" class="search-input" id="repSearch" placeholder="Rechercher un hôtel…" oninput="filterHotels()">
+      <span class="pill active" data-rf="all" onclick="filterByZone(this)">Toutes zones</span>
+      <span class="pill" data-rf="Nord" onclick="filterByZone(this)">Nord</span>
+      <span class="pill" data-rf="Nord-Ouest" onclick="filterByZone(this)">Nord-Ouest</span>
+      <span class="pill" data-rf="Nord-Est" onclick="filterByZone(this)">Nord-Est</span>
+      <span class="pill" data-rf="Est" onclick="filterByZone(this)">Est</span>
+      <span class="pill" data-rf="Ouest" onclick="filterByZone(this)">Ouest</span>
+      <span class="pill" data-rf="Sud-Ouest" onclick="filterByZone(this)">Sud-Ouest</span>
+      <span class="pill" data-rf="Sud-Est" onclick="filterByZone(this)">Sud-Est</span>
+      <span class="pill" data-rf="buffet" onclick="filterByZone(this)">Buffet confirmé</span>
+    </div>
+    <div class="rep-table-wrap">
+      <table class="rep-table">
+        <thead><tr>
+          <th>Hôtel</th><th>Class.</th><th>Zone</th><th>Groupe</th><th>Capacité</th><th>Restaurants F&B</th><th>Buffet</th><th>Contact F&B</th>
+        </tr></thead>
+        <tbody id="repBody"></tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL 5 : STRATÉGIE
+══════════════════════════════════════ -->
+<div class="panel" id="panel-strategie">
+  <div class="content" style="padding:28px 32px">
+  <div class="strat-wrap">
+    <div style="text-align:center;padding:24px 0 28px;border-bottom:1px solid var(--bd);margin-bottom:28px">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--ac);margin-bottom:6px">Stratégie & Terrain</div>
+      <div style="font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mt)">Conseils pour maximiser vos chances · Aapiti Consulting</div>
+    </div>
+
+    <div class="quote-block"><q>« La première visite n'est pas pour vendre. C'est pour comprendre. »</q></div>
+
+    <div class="strat-card">
+      <h3>Objectif des 4 premières semaines</h3>
+      <p>Votre objectif n'est pas de signer un contrat. C'est de construire une cartographie précise du marché et d'identifier 2–3 hôtels vraiment ouverts à l'innovation. La signature viendra naturellement.</p>
+      <div class="timeline" style="margin-top:16px">
+        <div class="tl-item"><div class="tl-dot">1</div><div class="tl-content"><h4>Semaine 1–2 · Observation</h4><p>Visite de 4–5 établissements. Pas de vente. Utiliser l'outil d'audit. Observer, noter, photographier (discrètement).</p></div></div>
+        <div class="tl-item"><div class="tl-dot">2</div><div class="tl-content"><h4>Semaine 2–3 · Qualification</h4><p>Analyser les scores d'audit. Identifier les 3 prospects prioritaires (score > 45/65). Préparer une offre personnalisée par hôtel.</p></div></div>
+        <div class="tl-item"><div class="tl-dot">3</div><div class="tl-content"><h4>Semaine 3–4 · Premier contact</h4><p>Envoyer l'offre personnalisée + proposer la démonstration gratuite. Relancer à J+5 si pas de réponse.</p></div></div>
+        <div class="tl-item"><div class="tl-dot">4</div><div class="tl-content"><h4>Mois 2 · Démonstration</h4><p>Préparer une mini-table de grazing spectaculaire. Inviter Chef + Directeur F&B. Laisser le résultat parler à votre place.</p></div></div>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <h3>Questions à poser en premier RDV</h3>
+      <ul>
+        <li>Avez-vous un service buffet (petit-déjeuner, déjeuner, brunch, dîner) ? Quelle fréquence ?</li>
+        <li>Combien de couverts en moyenne lors d'un service buffet ?</li>
+        <li>Qui gère actuellement la mise en place visuelle du buffet ?</li>
+        <li>Avez-vous des événements récurrents (mariages, corporate, galas) ? Avec quel format de restauration ?</li>
+        <li>Comment évaluez-vous l'impact visuel de votre offre food sur vos clients actuellement ?</li>
+        <li>Avez-vous des retours clients mentionnant la présentation des plats ou du buffet ?</li>
+        <li>Quel est votre objectif F&B pour la prochaine saison haute ?</li>
+      </ul>
+    </div>
+
+    <div class="strat-card">
+      <h3>Hôtels prioritaires — Buffet confirmé</h3>
+      <ul>
+        <li><strong>Mauricia Beachcomber</strong> — Le Trésor : buffet gourmet confirmé ✓</li>
+        <li><strong>Ambre Resort</strong> (All Inclusive adults only) — La Coupole : buffet quotidien ✓</li>
+        <li><strong>Heritage Awali</strong> (All Inclusive 5★) — Buffet quotidien thématique ✓</li>
+        <li><strong>Shandrani Beachcomber</strong> (All Inclusive) — Buffet quotidien probable ✓</li>
+        <li><strong>Victoria Beachcomber</strong> — Format buffet familial probable ✓</li>
+        <li><strong>Tamassa Resort</strong> (All Inclusive LUX*) — Eat@Tamassa buffet ✓</li>
+        <li><strong>Canonnier Beachcomber</strong> — Grande capacité 268 ch., buffet probable ✓</li>
+        <li><strong>Trou aux Biches Beachcomber</strong> — 305 suites, service mixte ✓</li>
+      </ul>
+    </div>
+
+    <div class="strat-card">
+      <h3>Réponses aux objections fréquentes</h3>
+      <div id="objections"></div>
+    </div>
+
+    <div class="strat-card">
+      <h3>Signaux d'un prospect chaud</h3>
+      <ul>
+        <li>Le Directeur F&B vous reçoit lui-même (pas un assistant)</li>
+        <li>Il mentionne des problèmes récents (retours clients, avis TripAdvisor, concurrence)</li>
+        <li>Il pose des questions sur les délais et le budget</li>
+        <li>Il vous fait visiter les cuisines ou l'espace buffet</li>
+        <li>Il parle de projets ou d'événements à venir</li>
+        <li>Il prend des notes ou photographie votre moodboard</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</div>
+
+</div><!-- /app-body -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════
+const PALETTES={
+  matin:{name:"Matin Tropical",spec:"Ivoire · Or · Sauge · Mangue",
+    stripe:["#FAF7F0","#E8DFC8","#C8A348","#B8C4B0","#7A9A72","#D4B96A","#F4C97A","#E8A87C"],
+    swatches:[{hex:"#FAF7F0",label:"Ivoire\nNappage"},{hex:"#E8DFC8",label:"Sable\nFond"},{hex:"#C8A348",label:"Or\nAccent"},{hex:"#7A9A72",label:"Sauge\nVégétal"},{hex:"#F4C97A",label:"Mangue\nFruit chaud"},{hex:"#E8A87C",label:"Papaye\nFruit doux"},{hex:"#D4453B",label:"Hibiscus\nContraste"},{hex:"#5C4A2A",label:"Bois\nMatière"}]},
+  luxe:{name:"Luxe Classique",spec:"Blanc · Or pâle · Vert · Rouge",
+    stripe:["#FDFAF5","#E8E0D0","#BFA060","#9BB89A","#E2C9A0","#D4453B","#8B7355","#F9F3E8"],
+    swatches:[{hex:"#FDFAF5",label:"Blanc pur\nNappage"},{hex:"#E8E0D0",label:"Crème\nFond"},{hex:"#BFA060",label:"Or pâle\nAccent"},{hex:"#9BB89A",label:"Vert doux\nVégétal"},{hex:"#E2C9A0",label:"Blé\nViennois."},{hex:"#D4453B",label:"Rouge\nContraste"},{hex:"#8B7355",label:"Havane\nContenant"},{hex:"#F9F3E8",label:"Ivoire\nLinges"}]},
+  tropical:{name:"Vivant Tropical",spec:"Ananas · Menthe · Pitaya · Lagon",
+    stripe:["#FFFCF4","#FFD166","#06D6A0","#EF476F","#118AB2","#F4A261","#2A9D8F","#073B4C"],
+    swatches:[{hex:"#FFFCF4",label:"Blanc lait\nNappage"},{hex:"#FFD166",label:"Ananas\nFruit vif"},{hex:"#06D6A0",label:"Menthe\nVégétal"},{hex:"#EF476F",label:"Pitaya\nContraste"},{hex:"#118AB2",label:"Lagon\nAccent"},{hex:"#F4A261",label:"Mangue\nFruit"},{hex:"#2A9D8F",label:"Sauge vive\nHerbes"},{hex:"#073B4C",label:"Nuit trop.\nProfondeur"}]},
+  terracotta:{name:"Terracotta & Vert",spec:"Lin · Terracotta · Sauge · Miel",
+    stripe:["#F7F2EB","#E07A5F","#3D405B","#81B29A","#F2CC8F","#5C4033","#D4A574","#A8C5A0"],
+    swatches:[{hex:"#F7F2EB",label:"Lin écru\nNappage"},{hex:"#E07A5F",label:"Terracotta\nAccent"},{hex:"#3D405B",label:"Ardoise\nProfondeur"},{hex:"#81B29A",label:"Sauge\nVégétal"},{hex:"#F2CC8F",label:"Miel\nFruit/Pain"},{hex:"#5C4033",label:"Acajou\nBois"},{hex:"#D4A574",label:"Caramel\nTerrain"},{hex:"#A8C5A0",label:"Pistache\nFraîcheur"}]},
+  sombre:{name:"Élégance Nuit",spec:"Or · Ébène · Forêt · Bronze",
+    stripe:["#F5F0E8","#2E2619","#C8A348","#4A6E44","#8B6914","#E8E0D0","#D4B96A","#1C1814"],
+    swatches:[{hex:"#F5F0E8",label:"Ivoire chaud\nNappage"},{hex:"#2E2619",label:"Ébène\nFond"},{hex:"#C8A348",label:"Or\nLumière"},{hex:"#4A6E44",label:"Forêt\nVégétal"},{hex:"#8B6914",label:"Bronze\nAccent"},{hex:"#E8E0D0",label:"Crème\nRelief"},{hex:"#D4B96A",label:"Or clair\nDétail"},{hex:"#1C1814",label:"Noir\nContraste"}]}
+};
+
+const MOMENTS={
+  "petit-dejeuner":{label:"Petit-Déjeuner",n1:"Produits mis en avant",n2:"Techniques de dressage"},
+  "dejeuner":{label:"Déjeuner",n1:"Produits mis en avant",n2:"Techniques de dressage"},
+  "diner":{label:"Dîner",n1:"Produits sélectionnés",n2:"Techniques signature"},
+  "brunch":{label:"Brunch",n1:"Éléments du buffet",n2:"Composition & dressage"},
+  "cocktail":{label:"Cocktail",n1:"Bouchées & formats",n2:"Mise en scène"}
+};
+
+const SLOTS_DEF=[
+  {id:0,name:"Composition générale du buffet",icon:"🍽️",img:null},
+  {id:1,name:"Fruits tropicaux découpés",icon:"🥭",img:null},
+  {id:2,name:"Viennoiseries & pains artisanaux",icon:"🥐",img:null},
+  {id:3,name:"Fleurs comestibles & herbes",icon:"🌸",img:null},
+  {id:4,name:"Nappage & mise en scène",icon:"🪡",img:null},
+  {id:5,name:"Station jus & smoothies",icon:"🥤",img:null},
+  {id:6,name:"Vue d'ensemble · 3 hauteurs",icon:"📸",img:null},
+  {id:7,name:"Fromages découpés en rosace",icon:"🧀",img:null},
+];
+
+const ITEMS_DEF=[
+  {label:"Fruits tropicaux de saison (mangue, papaye, ananas Victoria)",on:true,color:"#F4C97A"},
+  {label:"Viennoiseries et pains frais artisanaux",on:true,color:"#E8DFC8"},
+  {label:"Confitures mauriciennes artisanales",on:true,color:"#D4453B"},
+  {label:"Fromages affinés — découpe en rosace",on:true,color:"#FAF7F0"},
+  {label:"Thés et infusions de l'île",on:true,color:"#7A9A72"},
+  {label:"Jus de fruits frais pressés",on:false,color:"#E8A87C"},
+  {label:"Yaourts locaux & labneh",on:false,color:"#FAF7F0"},
+];
+
+const TECHS_DEF=[
+  {label:"Mangue découpée en fleur ou en lamelles en éventail",on:true},
+  {label:"Ananas entier sculpté — pièce maîtresse centrale",on:true},
+  {label:"Fromages en rosace · Charcuteries en bouquet",on:true},
+  {label:"Verrines de fruits superposées par couleur",on:true},
+  {label:"Fleurs comestibles positionnées à la main",on:true},
+  {label:"Feuilles de bananier en sous-plats décoratifs",on:false},
+];
+
+const AUDIT_CRITERIA={
+  A:[
+    {k:"a1",q:"Attractivité visuelle globale",d:"Est-ce que ça donne envie au premier regard ? Y a-t-il une intention esthétique ?"},
+    {k:"a2",q:"Variété et organisation des produits",d:"Les produits sont-ils regroupés intelligemment ? Fluidité de circulation ?"},
+    {k:"a3",q:"Utilisation des hauteurs & volumes",d:"Y a-t-il du relief, des présentoirs, des cloches ? Ou tout est à plat ?"},
+    {k:"a4",q:"Cohérence des contenants & matières",d:"Verrines, ardoises, bois, céramique… Y a-t-il une ligne directrice ?"},
+    {k:"a5",q:"Fraîcheur & réapprovisionnement",d:"Les produits sont-ils renouvelés régulièrement ? Rien ne semble vieux ?"},
+  ],
+  B:[
+    {k:"b1",q:"Effet « waouh » à l'arrivée",d:"La mise en scène crée-t-elle une émotion immédiate, une envie de photographier ?"},
+    {k:"b2",q:"Présence de produits locaux mauriciens",d:"Achards, fruits exotiques, poissons locaux, rhum artisanal mis en valeur ?"},
+    {k:"b3",q:"Format partage / convivialité",d:"Y a-t-il des planches, du grazing-style ? Ou tout est en assiettes individuelles ?"},
+    {k:"b4",q:"Originalité & différenciation",d:"Y a-t-il quelque chose qu'on ne retrouve pas partout ? Un concept, une signature ?"},
+  ],
+  C:[
+    {k:"c1",q:"Connaissance produit du personnel",d:"Peut-on demander un conseil ? Le staff explique-t-il ce qu'il sert ?"},
+    {k:"c2",q:"Investissement food perçu par la direction",d:"L'hôtel valorise-t-il le F&B comme différenciateur ou comme un coût ?"},
+    {k:"c3",q:"Réactivité aux besoins spéciaux / allergies",d:"Y a-t-il un étiquetage clair ? Le staff propose-t-il des alternatives ?"},
+  ],
+  D:[
+    {k:"d1",q:"Potentiel global pour votre offre",d:"Votre intuition globale : est-ce un bon prospect pour Aapiti ?"},
+  ]
+};
+
+const GRAZING_FORMATS=["Table grazing petit-déjeuner","Grazing événementiel (mariages)","Cocktail dînatoire corporate","Afterwork / pool party","Expérience romantique (couples)","Formation staff F&B"];
+
+const HOTELS=[
+  {nom:"Royal Palm Beachcomber Luxury",stars:"5★ Palace",zone:"Nord",groupe:"Beachcomber",cap:"98 suites",restau:"The Palm (gastro), The Bar",buffet:"probable",contact:"fbmanager@royalpalmbeachcomber.com · +230 209 8300"},
+  {nom:"LUX* Grand Baie",stars:"5★",zone:"Nord",groupe:"LUX*",cap:"~100 suites",restau:"Bisou Rooftop, Asiatique gastro",buffet:"verifier",contact:"guestexperience@luxresorts.com · +230 204 9191"},
+  {nom:"Maison 20 Degrés Sud",stars:"4★ Boutique",zone:"Nord",groupe:"Relais & Châteaux",cap:"34 chambres",restau:"Gastro, Bar piscine",buffet:"verifier",contact:"info@20degressud.com · +230 263 5000"},
+  {nom:"Paradise Cove Boutique Hotel",stars:"5★ Boutique",zone:"Nord",groupe:"Sun Resorts",cap:"72 suites",restau:"The Plantation, La Crique",buffet:"verifier",contact:"+230 204 4000"},
+  {nom:"Canonnier Beachcomber",stars:"4★",zone:"Nord",groupe:"Beachcomber",cap:"268 chambres",restau:"La Citadelle, La Paillote",buffet:"probable",contact:"+230 209 7000"},
+  {nom:"Mauricia Beachcomber",stars:"4★",zone:"Nord",groupe:"Beachcomber",cap:"238 chambres",restau:"Le Trésor (buffet gourmet), La Plage",buffet:"confirme",contact:"+230 209 1100"},
+  {nom:"Lagoon Attitude",stars:"4★",zone:"Nord",groupe:"Attitude Hotels",cap:"67 chambres",restau:"Zenfants, Bar plage",buffet:"verifier",contact:"info@attitudehotels.com · +230 204 4700"},
+  {nom:"InterContinental Balaclava",stars:"5★",zone:"Nord-Ouest",groupe:"IHG",cap:"210 chambres",restau:"Kangan (indien), La Brasserie, Aqua Bar",buffet:"probable",contact:"+230 204 3000"},
+  {nom:"Angsana Balaclava",stars:"5★",zone:"Nord-Ouest",groupe:"Banyan Tree",cap:"130 suites",restau:"Angsana Café, Saffron",buffet:"verifier",contact:"+230 204 3600"},
+  {nom:"The Ravenala Attitude",stars:"4★",zone:"Nord-Ouest",groupe:"Attitude Hotels",cap:"280 chambres",restau:"Horizon, Beach Club, Frangipanier",buffet:"probable",contact:"info@attitudehotels.com · +230 204 3030"},
+  {nom:"Trou aux Biches Beachcomber",stars:"5★",zone:"Nord-Ouest",groupe:"Beachcomber",cap:"305 suites",restau:"Casuarina (gastro), La Plantation",buffet:"probable",contact:"+230 204 6565"},
+  {nom:"Victoria Beachcomber",stars:"4★",zone:"Nord-Ouest",groupe:"Beachcomber",cap:"250 chambres",restau:"La Jonque, Le Bougainville",buffet:"probable",contact:"+230 204 2000"},
+  {nom:"Maritim Resort & Spa",stars:"5★",zone:"Nord-Ouest",groupe:"Maritim Hotels",cap:"255 chambres",restau:"Café des Arts, Le Beau Rivage",buffet:"probable",contact:"+230 204 1000"},
+  {nom:"Le Méridien Île Maurice",stars:"5★",zone:"Nord-Ouest",groupe:"Marriott",cap:"265 chambres",restau:"Cilantro, Sweni, Latitude",buffet:"probable",contact:"+230 204 3333"},
+  {nom:"Constance Prince Maurice",stars:"5★ Luxe",zone:"Nord-Est",groupe:"Constance",cap:"89 suites",restau:"Le Barachois (flottant), Le Prince Maurice",buffet:"verifier",contact:"reservations@constancehotels.com · +230 204 1000"},
+  {nom:"LUX* Grand Gaube",stars:"5★",zone:"Nord-Est",groupe:"LUX*",cap:"177 chambres",restau:"Banyan, Ginger, Mixologist",buffet:"probable",contact:"guestexperience@luxresorts.com · +230 204 9200"},
+  {nom:"Zilwa Attitude",stars:"4★",zone:"Nord-Est",groupe:"Attitude Hotels",cap:"214 chambres",restau:"Lakaz Mami, Ti Calodyne, Fish & Rhum",buffet:"probable",contact:"info@attitudehotels.com · +230 204 0000"},
+  {nom:"Radisson Blu Azuri",stars:"4★+",zone:"Nord-Est",groupe:"Radisson",cap:"105 chambres",restau:"Tides, Ocean Lounge",buffet:"verifier",contact:"+230 401 1800"},
+  {nom:"One&Only Le Saint Géran",stars:"5★ Palace",zone:"Est",groupe:"One&Only",cap:"163 suites",restau:"The Restaurant, Tapasake, The Beach",buffet:"verifier",contact:"reservations@oneandonlylesgeorans.com · +230 401 1688"},
+  {nom:"Four Seasons at Anahita",stars:"5★ Luxe",zone:"Est",groupe:"Four Seasons",cap:"136 villas",restau:"Upper Cut, Bambou, Lakaz, AquaSol",buffet:"verifier",contact:"+230 402 3100"},
+  {nom:"Constance Belle Mare Plage",stars:"5★ Luxe",zone:"Est",groupe:"Constance",cap:"256 suites",restau:"La Spiaggia, Indigo, Le Swing",buffet:"probable",contact:"bmp.info@constancehotels.com · +230 402 2600"},
+  {nom:"The Residence Mauritius",stars:"5★",zone:"Est",groupe:"Cenizaro",cap:"163 chambres",restau:"The Dining Room, The Planters, Oasis",buffet:"probable",contact:"info@theresidence.com · +230 401 8888"},
+  {nom:"LUX* Belle Mare",stars:"5★",zone:"Est",groupe:"LUX*",cap:"176 villas",restau:"Beach Rouge, Mixologist, Mondo",buffet:"verifier",contact:"guestexperience@luxresorts.com · +230 402 2000"},
+  {nom:"SALT of Palmar",stars:"5★ Boutique",zone:"Est",groupe:"LUX*",cap:"58 suites",restau:"SALT Kitchen, Rooftop, Bakers & Co",buffet:"verifier",contact:"saltpalmar@luxresorts.com · +230 402 3400"},
+  {nom:"Ambre Resort & Spa",stars:"4★+",zone:"Est",groupe:"Sun Resorts",cap:"294 chambres",restau:"Amaya (gastro), La Coupole (buffet), Flamant",buffet:"confirme",contact:"+230 401 5500"},
+  {nom:"Sofitel L'Impérial",stars:"5★",zone:"Ouest",groupe:"Accor",cap:"290 chambres",restau:"Le Coq d'Or, La Cabane, Ô Mer",buffet:"probable",contact:"+230 453 8700"},
+  {nom:"Sugar Beach Mauritius",stars:"5★",zone:"Ouest",groupe:"Sun Resorts",cap:"238 chambres",restau:"The Manoir Dining Room, La Plage",buffet:"probable",contact:"+230 403 3700"},
+  {nom:"Maradiva Villas Resort",stars:"5★ Luxe",zone:"Ouest",groupe:"Indépendant",cap:"65 villas",restau:"Tides, Cilantro, Barachois",buffet:"verifier",contact:"info@maradiva.com · +230 403 1500"},
+  {nom:"Hilton Mauritius",stars:"5★",zone:"Ouest",groupe:"Hilton",cap:"193 chambres",restau:"Tides, Aqua, Lounge Bar",buffet:"probable",contact:"+230 403 3003"},
+  {nom:"La Pirogue Resort & Spa",stars:"4★",zone:"Ouest",groupe:"Sun Resorts",cap:"175 bungalows",restau:"Sega, Coconut, Le Deck",buffet:"verifier",contact:"+230 403 3900"},
+  {nom:"St. Regis Mauritius",stars:"5★ Luxe",zone:"Sud-Ouest",groupe:"Marriott",cap:"172 chambres",restau:"Exterior, Toq, La Bonne Chute",buffet:"verifier",contact:"+230 403 9000"},
+  {nom:"LUX* Le Morne",stars:"5★",zone:"Sud-Ouest",groupe:"LUX*",cap:"149 suites",restau:"Beach Rouge, Mixologist, Ginger",buffet:"verifier",contact:"guestexperience@luxresorts.com · +230 401 4000"},
+  {nom:"Paradis Beachcomber",stars:"5★",zone:"Sud-Ouest",groupe:"Beachcomber",cap:"258 chambres",restau:"Les Palmiers, La Ravanne, La Pirogue",buffet:"probable",contact:"+230 401 5050"},
+  {nom:"Heritage Le Telfair",stars:"5★",zone:"Sud-Ouest",groupe:"Heritage Resorts",cap:"158 suites",restau:"Annabella's, C Beach Club, Gin'Ja",buffet:"verifier",contact:"heritage@heritageresorts.mu · +230 601 5500"},
+  {nom:"Heritage Awali",stars:"5★",zone:"Sud-Ouest",groupe:"Heritage Resorts",cap:"160 chambres",restau:"Boma, Thaali, Chez Camille, Vetyver",buffet:"confirme",contact:"heritage@heritageresorts.mu · +230 601 1500"},
+  {nom:"So/ Sofitel Mauritius",stars:"5★ Design",zone:"Sud-Ouest",groupe:"Accor",cap:"91 villas",restau:"The Market, Patio, Bar So",buffet:"probable",contact:"+230 601 9999"},
+  {nom:"Outrigger Mauritius",stars:"4★+",zone:"Sud-Ouest",groupe:"Outrigger",cap:"181 chambres",restau:"Nalu, Naïade",buffet:"verifier",contact:"+230 401 5500"},
+  {nom:"Tamassa Resort",stars:"4★",zone:"Sud-Ouest",groupe:"LUX*",cap:"214 chambres",restau:"Eat@Tamassa, Bahia",buffet:"confirme",contact:"+230 601 6500"},
+  {nom:"Shanti Maurice",stars:"5★ Wellness",zone:"Sud-Ouest",groupe:"Nira Hotels",cap:"61 suites",restau:"Essence, La Plage, Wellness Bar",buffet:"verifier",contact:"info@shantimaurice.com · +230 603 7200"},
+  {nom:"Shandrani Beachcomber",stars:"5★",zone:"Sud-Est",groupe:"Beachcomber",cap:"195 chambres",restau:"Les Deux Frères, La Cabane, L'Île",buffet:"confirme",contact:"+230 603 4343"},
+  {nom:"Preskil Island Resort",stars:"4★",zone:"Sud-Est",groupe:"Attitude Hotels",cap:"140 chambres",restau:"Horizon, Le Ponton",buffet:"probable",contact:"info@attitudehotels.com · +230 604 1000"},
+];
+
+const OBJECTIONS=[
+  {q:"« Nos équipes font déjà bien leur travail »",a:"C'est justement parce qu'elles sont compétentes qu'elles progresseront vite. Je viens élever leur niveau, pas les remplacer. Les meilleurs établissements au monde investissent dans la formation continue — c'est pour ça qu'ils restent les meilleurs."},
+  {q:"« On n'a pas le budget pour ça »",a:"Je commence par une démonstration gratuite sans engagement. Si le résultat vous convainc, on chiffre ensemble ce qui correspond à vos priorités. Le ROI est mesurable : un buffet photographiable génère du contenu social, des avis positifs, et fidélise."},
+  {q:"« On n'a pas de buffet »",a:"J'interviens aussi sur les cocktails, les événements corporate, les mariages, les brunches. Tout format de restauration collective ou événementielle est une opportunité de scénographie."},
+  {q:"« On a déjà un décorateur »",a:"Mon expertise est spécifiquement culinaire : je travaille avec les produits, pas autour d'eux. C'est complémentaire, pas concurrent. Un fleuriste sublime l'espace — je sublime l'aliment."},
+  {q:"« L'effet ne va pas durer »",a:"C'est précisément le cœur de ma valeur : je transmets les savoir-faire à vos équipes. Le niveau reste après mon départ. C'est un investissement en capital humain, pas un one-shot."},
+  {q:"« Ce n'est pas notre style »",a:"J'adapte systématiquement l'esthétique à l'identité de votre établissement. Un Palace recevra une approche épurée et ultra-luxe ; un resort familial, quelque chose de chaleureux et convivial. Il n'y a pas de formule unique."},
+];
+
+// State
+let S={
+  moment:"petit-dejeuner",palette:"matin",
+  slots:JSON.parse(JSON.stringify(SLOTS_DEF)),
+  items:JSON.parse(JSON.stringify(ITEMS_DEF)),
+  techs:JSON.parse(JSON.stringify(TECHS_DEF)),
+  keywords:"Lumière dorée · Légèreté · Fraîcheur mauricienne · Photographiable",
+  quote:"Donner envie de commencer la journée avec légèreté et identité mauricienne",
+  contact:"virginie.dcml@gmail.com · +230 57 83 78 22",
+  hotelName:"Hôtellerie 5★ · Île Maurice",hotelSub:"Fraîcheur & Éveil",
+  auditScores:{},auditFormats:[],zoneFilter:"all",
+};
+
+// ═══════════════════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════════════════
+document.querySelectorAll('.nav-tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('panel-'+t.dataset.tab).classList.add('active');
+  });
+});
+
+// ═══════════════════════════════════════════════════════════
+// MOODBOARD
+// ═══════════════════════════════════════════════════════════
+function initMoodboard(){
+  // Palette presets
+  const c=document.getElementById('palPresets');
+  c.innerHTML='';
+  Object.entries(PALETTES).forEach(([k,p])=>{
+    const d=document.createElement('div');
+    d.className='pal-preset'+(k===S.palette?' active':'');
+    d.dataset.pal=k;
+    d.innerHTML=`<div class="pal-dots">${p.swatches.slice(0,6).map(s=>`<div class="pal-dot" style="background:${s.hex}"></div>`).join('')}</div><span class="pal-name">${p.name}</span>`;
+    d.addEventListener('click',()=>{
+      document.querySelectorAll('.pal-preset').forEach(x=>x.classList.remove('active'));
+      d.classList.add('active'); S.palette=k; applyAll();
+    });
+    c.appendChild(d);
+  });
+  // Moment pills
+  document.querySelectorAll('#momentPills .pill').forEach(p=>{
+    p.addEventListener('click',()=>{
+      document.querySelectorAll('#momentPills .pill').forEach(x=>x.classList.remove('active'));
+      p.classList.add('active'); S.moment=p.dataset.m; applyAll();
+    });
+  });
+  // Text inputs
+  ['hotelName','hotelSub','keywords','quote','contact'].forEach(id=>{
+    document.getElementById(id).addEventListener('input',e=>{S[id]=e.target.value;applyAll();});
+  });
+  buildSlotEditor(); buildItemsList(); buildTechList();
+  applyAll();
+}
+
+function buildSlotEditor(){
+  const c=document.getElementById('slotEd'); c.innerHTML='';
+  S.slots.forEach((sl,i)=>{
+    const d=document.createElement('div'); d.className='slot-ed-row';
+    d.innerHTML=`<span class="slot-num">${i+1}</span>
+    <div class="slot-ed-info"><input type="text" value="${sl.name}" placeholder="Intitulé…" onchange="S.slots[${i}].name=this.value;renderGrid()"></div>
+    <div class="slot-thumb" title="Charger une photo">${sl.img?`<img src="${sl.img}">`:(sl.icon||'📷')}
+    <input type="file" accept="image/*" onchange="loadSlot(event,${i})"></div>`;
+    c.appendChild(d);
+  });
+}
+
+function loadSlot(ev,idx){
+  const f=ev.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{S.slots[idx].img=e.target.result;buildSlotEditor();renderGrid();};
+  r.readAsDataURL(f);
+}
+
+function buildItemsList(){
+  const c=document.getElementById('itemsList'); c.innerHTML='';
+  S.items.forEach((it,i)=>{
+    const d=document.createElement('div'); d.className='item-row';
+    d.innerHTML=`<div class="item-dot" style="background:${it.color}"></div>
+    <input type="checkbox" ${it.on?'checked':''} onchange="S.items[${i}].on=this.checked;applyAll()">
+    <span class="il" onclick="this.previousElementSibling.click()">${it.label}</span>
+    <span class="del-btn" onclick="S.items.splice(${i},1);buildItemsList();applyAll()">✕</span>`;
+    c.appendChild(d);
+  });
+}
+
+function buildTechList(){
+  const c=document.getElementById('techList'); c.innerHTML='';
+  S.techs.forEach((t,i)=>{
+    const d=document.createElement('div'); d.className='item-row';
+    d.innerHTML=`<input type="checkbox" ${t.on?'checked':''} onchange="S.techs[${i}].on=this.checked;applyAll()">
+    <span class="il" onclick="this.previousElementSibling.click()">${t.label}</span>
+    <span class="del-btn" onclick="S.techs.splice(${i},1);buildTechList();applyAll()">✕</span>`;
+    c.appendChild(d);
+  });
+}
+
+function addItem(){const v=document.getElementById('newItem').value.trim();if(!v)return;S.items.push({label:v,on:true,color:'#C8A348'});document.getElementById('newItem').value='';buildItemsList();applyAll();}
+function addTech(){const v=document.getElementById('newTech').value.trim();if(!v)return;S.techs.push({label:v,on:true});document.getElementById('newTech').value='';buildTechList();applyAll();}
+
+function applyAll(){
+  const pal=PALETTES[S.palette], mo=MOMENTS[S.moment];
+  document.getElementById('moodboard').style.background=pal.swatches[0].hex;
+  // stripe
+  const st=document.getElementById('mbStripe');
+  st.innerHTML=pal.stripe.map(c=>`<span style="background:${c}"></span>`).join('');
+  // header
+  document.getElementById('mbEm').textContent=mo.label;
+  document.getElementById('mbHotel').textContent=S.hotelName;
+  document.getElementById('mbTag1').textContent=S.hotelSub||mo.tag||'';
+  // keywords
+  const kws=document.getElementById('mbKws');
+  const ks=S.keywords.split('·').map(x=>x.trim()).filter(Boolean);
+  kws.innerHTML='<span class="mb-kw-lbl">Ambiance</span>'+ks.map((k,i)=>`<span class="mb-kw">${k}</span>${i<ks.length-1?'<span class="mb-kw-dot"></span>':''}`).join('');
+  // grid
+  renderGrid();
+  // swatches
+  document.getElementById('mbSwatches').innerHTML=pal.swatches.map(s=>`<div class="mb-sw"><div class="mb-sw-dot" style="background:${s.hex}"></div><div class="mb-sw-name">${s.label.replace('\n','<br>')}</div></div>`).join('');
+  // spec palette
+  document.getElementById('mbSpecPal').textContent=pal.spec;
+  // quote
+  document.getElementById('mbQuote').textContent=`« ${S.quote} »`;
+  // notes
+  document.getElementById('note1ttl').textContent=mo.n1;
+  document.getElementById('note2ttl').textContent=mo.n2;
+  document.getElementById('note1list').innerHTML=S.items.filter(x=>x.on).map(x=>`<li>${x.label}</li>`).join('');
+  document.getElementById('note2list').innerHTML=S.techs.filter(x=>x.on).map(x=>`<li>${x.label}</li>`).join('');
+  // contact
+  document.getElementById('mbContact').innerHTML=S.contact.split('·').map(x=>x.trim()).join('<br>');
+}
+
+function renderGrid(){
+  const g=document.getElementById('mbGrid'); g.innerHTML='';
+  const layouts=[
+    {col:'1/3',row:'1/2'},{col:'3/4',row:'1/2'},
+    {col:'1/2',row:'2/3'},{col:'2/3',row:'2/3'},{col:'3/4',row:'2/3'},
+    {col:'1/2',row:'3/4'},{col:'2/3',row:'2/4'},{col:'3/4',row:'3/4'},
+  ];
+  S.slots.slice(0,8).forEach((sl,i)=>{
+    const lay=layouts[i]||{col:'auto',row:'auto'};
+    const d=document.createElement('div'); d.className='mb-slot';
+    d.style.gridColumn=lay.col; d.style.gridRow=lay.row;
+    if(sl.img){
+      d.innerHTML=`<img src="${sl.img}" alt="${sl.name}"><div class="mb-slot-lbl">${sl.name}</div><input type="file" accept="image/*" onchange="loadSlot(event,${i})">`;
+    }else{
+      d.innerHTML=`<div class="mb-ph"><div class="mb-ph-icon">${sl.icon}</div><div class="mb-ph-name">${sl.name}</div></div><input type="file" accept="image/*" onchange="loadSlot(event,${i})">`;
+    }
+    g.appendChild(d);
+  });
+}
+
+function saveJSON(){
+  const d={...S,slots:S.slots.map(s=>({...s,img:s.img?'[IMAGE]':null}))};
+  const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b);
+  a.download=`aapiti_${S.moment}_${Date.now()}.json`; a.click();
+}
+function loadJSON(ev){
+  const f=ev.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const d=JSON.parse(e.target.result);
+      Object.assign(S,d);
+      ['hotelName','hotelSub','keywords','quote','contact'].forEach(id=>{
+        const el=document.getElementById(id); if(el)el.value=S[id]||'';
+      });
+      document.querySelectorAll('#momentPills .pill').forEach(p=>p.classList.toggle('active',p.dataset.m===S.moment));
+      document.querySelectorAll('.pal-preset').forEach(p=>p.classList.toggle('active',p.dataset.pal===S.palette));
+      buildSlotEditor(); buildItemsList(); buildTechList(); applyAll();
+    }catch(err){alert('Erreur: '+err.message);}
+  };
+  r.readAsText(f);
+}
+
+// ═══════════════════════════════════════════════════════════
+// AUDIT
+// ═══════════════════════════════════════════════════════════
+function initAudit(){
+  // Build criteria
+  Object.entries(AUDIT_CRITERIA).forEach(([sec,crit])=>{
+    const cont=document.getElementById('sec'+sec); cont.innerHTML='';
+    crit.forEach(c=>{
+      const d=document.createElement('div'); d.className='audit-criterion';
+      d.innerHTML=`<h4>${c.q}</h4><p>${c.d}</p>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div class="stars" id="stars_${c.k}">${[1,2,3,4,5].map(n=>`<div class="star" data-k="${c.k}" data-v="${n}" onclick="setStar('${c.k}',${n})">${n}</div>`).join('')}</div>
+        <span class="star-label" id="sl_${c.k}">Non noté</span>
+      </div>`;
+      cont.appendChild(d);
+    });
+  });
+  // Grazing formats
+  const gf=document.getElementById('grazingFormats'); gf.innerHTML='';
+  GRAZING_FORMATS.forEach(f=>{
+    const d=document.createElement('div'); d.className='check-opt';
+    d.dataset.f=f;
+    d.innerHTML=`<span>${f}</span>`;
+    d.addEventListener('click',()=>{
+      d.classList.toggle('active');
+      if(d.classList.contains('active')){if(!S.auditFormats.includes(f))S.auditFormats.push(f);}
+      else{S.auditFormats=S.auditFormats.filter(x=>x!==f);}
+    });
+    gf.appendChild(d);
+  });
+}
+
+function setStar(k,v){
+  S.auditScores[k]=v;
+  document.querySelectorAll(`[data-k="${k}"]`).forEach(s=>s.classList.toggle('active',+s.dataset.v<=v));
+  const labels={1:"Insuffisant",2:"Médiocre",3:"Correct",4:"Bien",5:"Excellent"};
+  document.getElementById('sl_'+k).textContent=labels[v]||'';
+  updateScores();
+}
+
+function updateScores(){
+  const sc=S.auditScores;
+  const A=(['a1','a2','a3','a4','a5'].reduce((s,k)=>s+(sc[k]||0),0));
+  const B=(['b1','b2','b3','b4'].reduce((s,k)=>s+(sc[k]||0),0));
+  const C=(['c1','c2','c3'].reduce((s,k)=>s+(sc[k]||0),0));
+  const D=(sc['d1']||0);
+  const G=A+B+C+D;
+  document.getElementById('sA').textContent=A||'—';
+  document.getElementById('sB').textContent=B||'—';
+  document.getElementById('sC').textContent=C||'—';
+  document.getElementById('sD').textContent=D||'—';
+  document.getElementById('sGlobal').textContent=G?`${G} / 65`:'—';
+  // Priority
+  const pz=document.getElementById('priorityZone'); pz.innerHTML='';
+  if(G>0){
+    let cls,lbl;
+    if(G>=48){cls='p-high';lbl='🔥 Priorité HAUTE — Prospect chaud, engager immédiatement';}
+    else if(G>=30){cls='p-mid';lbl='⚡ Priorité MOYENNE — Bon potentiel, à suivre';}
+    else{cls='p-low';lbl='⏸ Priorité BASSE — Pas encore prêt, revenir plus tard';}
+    pz.innerHTML=`<div class="priority-badges"><span class="priority-badge ${cls}">${lbl}</span></div>`;
+  }
+}
+
+function exportAudit(){
+  const hotel=document.getElementById('a-hotel').value||'Hôtel';
+  const lines=[
+    `AUDIT F&B AAPITI CONSULTING`,
+    `Hôtel : ${hotel}`,
+    `Date : ${document.getElementById('a-date').value}`,
+    `Repas : ${document.getElementById('a-repas').value}`,
+    `Niveau : ${document.getElementById('a-niveau').value}`,
+    ``,`Première impression : ${document.getElementById('a-impression').value}`,
+    ``,`=== SCORES ===`,
+    `A - Présentation : ${['a1','a2','a3','a4','a5'].reduce((s,k)=>s+(S.auditScores[k]||0),0)} / 25`,
+    `B - Expérience : ${['b1','b2','b3','b4'].reduce((s,k)=>s+(S.auditScores[k]||0),0)} / 20`,
+    `C - Service : ${['c1','c2','c3'].reduce((s,k)=>s+(S.auditScores[k]||0),0)} / 15`,
+    `D - Potentiel : ${S.auditScores['d1']||0} / 5`,
+    ``,`Observations A : ${document.getElementById('obsA').value}`,
+    `Opportunités B : ${document.getElementById('obsB').value}`,
+    `Signaux C : ${document.getElementById('obsC').value}`,
+    ``,`Formats pertinents : ${S.auditFormats.join(', ')}`,
+    ``,`Argument principal : ${document.getElementById('a-argument').value}`,
+    `Interlocuteur : ${document.getElementById('a-interlo').value}`,
+    `Prochaine action : ${document.getElementById('a-action').value}`,
+  ];
+  const b=new Blob([lines.join('\n')],{type:'text/plain'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b);
+  a.download=`audit_${hotel.replace(/\s+/g,'_')}.txt`; a.click();
+}
+
+function resetAudit(){
+  if(!confirm('Réinitialiser l\'audit ?'))return;
+  S.auditScores={}; S.auditFormats=[];
+  document.querySelectorAll('.star').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.star-label').forEach(s=>s.textContent='Non noté');
+  document.querySelectorAll('.obs-area,.audit-meta-card input,.audit-meta-card textarea').forEach(el=>el.value='');
+  document.querySelectorAll('.check-opt').forEach(d=>d.classList.remove('active'));
+  document.getElementById('sA').textContent='—';
+  document.getElementById('sB').textContent='—';
+  document.getElementById('sC').textContent='—';
+  document.getElementById('sD').textContent='—';
+  document.getElementById('sGlobal').textContent='—';
+  document.getElementById('priorityZone').innerHTML='';
+}
+
+// ═══════════════════════════════════════════════════════════
+// OFFRE
+// ═══════════════════════════════════════════════════════════
+function copyOffre(){
+  const el=document.getElementById('offreDoc');
+  navigator.clipboard.writeText(el.innerText).then(()=>alert('✅ Texte copié dans le presse-papier'));
+}
+
+// ═══════════════════════════════════════════════════════════
+// RÉPERTOIRE
+// ═══════════════════════════════════════════════════════════
+let _zoneFilter='all';
+
+function initRepertoire(){
+  // Stats
+  const confirmed=HOTELS.filter(h=>h.buffet==='confirme').length;
+  const probable=HOTELS.filter(h=>h.buffet==='probable').length;
+  const cinq=HOTELS.filter(h=>h.stars.includes('5★')).length;
+  document.getElementById('repStats').innerHTML=`
+    <div class="stat-card"><div class="stat-num">${HOTELS.length}</div><div class="stat-lbl">Établissements</div></div>
+    <div class="stat-card"><div class="stat-num">${cinq}</div><div class="stat-lbl">Hôtels 5★</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:#5DBF89">${confirmed}</div><div class="stat-lbl">Buffet confirmé</div></div>
+    <div class="stat-card"><div class="stat-num">${confirmed+probable}</div><div class="stat-lbl">Buffet probable+</div></div>`;
+  filterHotels();
+}
+
+function filterByZone(el){
+  document.querySelectorAll('[data-rf]').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active'); _zoneFilter=el.dataset.rf; filterHotels();
+}
+
+function filterHotels(){
+  const q=(document.getElementById('repSearch').value||'').toLowerCase();
+  let hotels=HOTELS;
+  if(_zoneFilter==='buffet') hotels=hotels.filter(h=>h.buffet==='confirme');
+  else if(_zoneFilter!=='all') hotels=hotels.filter(h=>h.zone===_zoneFilter);
+  if(q) hotels=hotels.filter(h=>h.nom.toLowerCase().includes(q)||h.groupe.toLowerCase().includes(q)||h.restau.toLowerCase().includes(q));
+  
+  const tbody=document.getElementById('repBody');
+  tbody.innerHTML=hotels.map(h=>{
+    const bBadge=h.buffet==='confirme'?'<span class="badge badge-buf">✓ Confirmé</span>':h.buffet==='probable'?'<span class="badge badge-unk">~ Probable</span>':'<span class="badge badge-nob">? À vérifier</span>';
+    const sBadge=h.stars.includes('5★')?'badge-5':'badge-4';
+    return `<tr>
+      <td><strong>${h.nom}</strong></td>
+      <td><span class="badge ${sBadge}">${h.stars}</span></td>
+      <td>${h.zone}</td>
+      <td>${h.groupe}</td>
+      <td>${h.cap}</td>
+      <td style="font-size:10px;color:var(--mt)">${h.restau}</td>
+      <td>${bBadge}</td>
+      <td style="font-size:10px;color:var(--mt)">${h.contact.replace(' · ','<br>')}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// STRATÉGIE — Objections accordion
+// ═══════════════════════════════════════════════════════════
+function initStrategie(){
+  const c=document.getElementById('objections'); c.innerHTML='';
+  OBJECTIONS.forEach((o,i)=>{
+    const d=document.createElement('div'); d.className='obj-card';
+    d.innerHTML=`<div class="obj-q" onclick="toggleObj(this)"><span>${o.q}</span><span class="arr">▼</span></div>
+    <div class="obj-a"><p>${o.a}</p></div>`;
+    c.appendChild(d);
+  });
+}
+function toggleObj(el){
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ENTER KEY on add inputs
+// ═══════════════════════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    if(document.activeElement.id==='newItem')addItem();
+    if(document.activeElement.id==='newTech')addTech();
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════════════════
+initMoodboard();
+initAudit();
+initRepertoire();
+initStrategie();
+</script>
+</body>
+</html>
