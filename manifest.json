@@ -1,0 +1,16 @@
+{
+  "name": "Aapiti · Studio Pro",
+  "short_name": "Aapiti Studio",
+  "description": "Outil de consulting F&B — Scénographie & Grazing",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#16130F",
+  "theme_color": "#1F1B14",
+  "lang": "fr",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

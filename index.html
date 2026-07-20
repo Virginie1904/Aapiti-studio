@@ -2,8 +2,21 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Aapiti · Studio Pro</title>
+
+<!-- PWA / Apple Web App -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Aapiti Studio">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1F1B14">
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -24,7 +37,7 @@ body{background:var(--bg);font-family:'Jost',sans-serif;color:var(--tx);min-heig
 .nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ac);letter-spacing:0.04em}
 .nav-logo-sub{font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mt)}
 .nav-tabs{display:flex;flex:1}
-.nav-tab{display:flex;align-items:center;gap:8px;padding:0 22px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mt);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;user-select:none}
+.nav-tab{display:flex;align-items:center;gap:8px;padding:0 22px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mt);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;user-select:none;touch-action:manipulation;-webkit-tap-highlight-color:rgba(200,163,72,0.2)}
 .nav-tab:hover{color:var(--tx);background:var(--hv)}
 .nav-tab.active{color:var(--ac);border-bottom-color:var(--ac);background:var(--hv)}
 .nav-tab .tab-icon{font-size:14px}
@@ -289,11 +302,11 @@ textarea{min-height:58px}
     </div>
   </div>
   <div class="nav-tabs">
-    <div class="nav-tab active" data-tab="moodboard"><span class="tab-icon">🎨</span> Moodboard</div>
-    <div class="nav-tab" data-tab="audit"><span class="tab-icon">📋</span> Audit Terrain</div>
-    <div class="nav-tab" data-tab="offre"><span class="tab-icon">📄</span> Offre & Tarifs</div>
-    <div class="nav-tab" data-tab="repertoire"><span class="tab-icon">🏨</span> Répertoire Hôtels</div>
-    <div class="nav-tab" data-tab="strategie"><span class="tab-icon">🎯</span> Stratégie & Objections</div>
+    <div class="nav-tab active" data-tab="moodboard" role="button" onclick="showPanel('moodboard')"><span class="tab-icon">🎨</span> Moodboard</div>
+    <div class="nav-tab" data-tab="audit" role="button" onclick="showPanel('audit')"><span class="tab-icon">📋</span> Audit Terrain</div>
+    <div class="nav-tab" data-tab="offre" role="button" onclick="showPanel('offre')"><span class="tab-icon">📄</span> Offre & Tarifs</div>
+    <div class="nav-tab" data-tab="repertoire" role="button" onclick="showPanel('repertoire')"><span class="tab-icon">🏨</span> Répertoire Hôtels</div>
+    <div class="nav-tab" data-tab="strategie" role="button" onclick="showPanel('strategie')"><span class="tab-icon">🎯</span> Stratégie & Objections</div>
   </div>
   <div class="nav-right">
     <span class="nav-badge">v2.0 · 2026</span>
@@ -540,10 +553,10 @@ textarea{min-height:58px}
         <table class="offre-table">
           <thead><tr><th>Service</th><th>Description</th><th>Format</th><th>Tarif</th></tr></thead>
           <tbody>
-            <tr><td><strong>01 · Audit F&B Grazing</strong></td><td>Analyse de votre offre existante + rapport de recommandations illustré sous 72h</td><td>1 jour sur site</td><td>15 000 – 28 000 MUR</td></tr>
-            <tr><td><strong>02 · Formation Équipe F&B</strong></td><td>Atelier pratique — gestes dressage, colorimétrie, hauteurs, storytelling food (jusqu'à 8 pers.)</td><td>Demi-journée</td><td>25 000 – 45 000 MUR</td></tr>
-            <tr><td><strong>03 · Conception Buffet Grazing</strong></td><td>Moodboard, palette chromatique, plan buffet, dressage produit par produit, supervision J</td><td>À l'événement</td><td>22 000 – 40 000 MUR</td></tr>
-            <tr><td><strong>04 · Accompagnement Mensuel</strong></td><td>Renouvellement créatif saisonnier, montée en compétence équipes, veille tendances</td><td>Forfait mensuel</td><td>43 000 – 81 000 MUR</td></tr>
+            <tr><td><strong contenteditable="true">01 · Audit F&B Grazing</strong></td><td contenteditable="true">Analyse de votre offre existante + rapport de recommandations illustré sous 72h</td><td contenteditable="true">1 jour sur site</td><td contenteditable="true">15 000 – 28 000 MUR</td></tr>
+            <tr><td><strong contenteditable="true">02 · Formation Équipe F&B</strong></td><td contenteditable="true">Atelier pratique — gestes dressage, colorimétrie, hauteurs, storytelling food (jusqu'à 8 pers.)</td><td contenteditable="true">Demi-journée</td><td contenteditable="true">25 000 – 45 000 MUR</td></tr>
+            <tr><td><strong contenteditable="true">03 · Conception Buffet Grazing</strong></td><td contenteditable="true">Moodboard, palette chromatique, plan buffet, dressage produit par produit, supervision J</td><td contenteditable="true">À l'événement</td><td contenteditable="true">22 000 – 40 000 MUR</td></tr>
+            <tr><td><strong contenteditable="true">04 · Accompagnement Mensuel</strong></td><td contenteditable="true">Renouvellement créatif saisonnier, montée en compétence équipes, veille tendances</td><td contenteditable="true">Forfait mensuel</td><td contenteditable="true">43 000 – 81 000 MUR</td></tr>
           </tbody>
         </table>
         <div class="offre-highlight">
@@ -840,14 +853,14 @@ let S={
 // ═══════════════════════════════════════════════════════════
 // NAV
 // ═══════════════════════════════════════════════════════════
-document.querySelectorAll('.nav-tab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById('panel-'+t.dataset.tab).classList.add('active');
-  });
-});
+function showPanel(tab){
+  document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  const activeTab=document.querySelector('.nav-tab[data-tab="'+tab+'"]');
+  if(activeTab) activeTab.classList.add('active');
+  const activePanel=document.getElementById('panel-'+tab);
+  if(activePanel) activePanel.classList.add('active');
+}
 
 // ═══════════════════════════════════════════════════════════
 // MOODBOARD
@@ -1196,6 +1209,26 @@ initMoodboard();
 initAudit();
 initRepertoire();
 initStrategie();
+
+// ═══════════════════════════════════════════════════════════
+// SERVICE WORKER — cache hors ligne (PWA)
+// ═══════════════════════════════════════════════════════════
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION IPAD — touchend en complément du onclick
+// ═══════════════════════════════════════════════════════════
+document.querySelectorAll('.nav-tab').forEach(function(t){
+  t.addEventListener('touchend',function(e){
+    e.preventDefault();
+    showPanel(this.dataset.tab);
+  });
+});
+
 </script>
 </body>
 </html>

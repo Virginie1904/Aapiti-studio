@@ -1,1 +1,0 @@
-# Aapiti-studio
