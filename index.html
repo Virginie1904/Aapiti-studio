@@ -277,14 +277,87 @@ textarea{min-height:58px}
 .obj-a.open{max-height:200px;padding:12px 16px}
 .obj-a p{font-size:11.5px;color:var(--mt);line-height:1.6}
 
+/* ── GUIDE TERRAIN ── */
+#panel-guide .gt-wrap{max-width:820px;margin:0 auto;padding:28px 32px 60px}
+.gt-tabs{display:flex;gap:8px;margin-bottom:20px}
+.gt-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  cursor:pointer;padding:10px 6px;border:1px solid var(--bd);border-radius:6px;background:var(--pn);
+  transition:all .2s;user-select:none}
+.gt-tab:hover{background:var(--hv)}
+.gt-tab.active{border-color:var(--ac);background:var(--hv)}
+.gt-tab-icon{font-size:16px}
+.gt-tab-num{font-family:'Cormorant Garamond',serif;font-size:10px;color:var(--mt);font-weight:700;letter-spacing:0.15em}
+.gt-tab.active .gt-tab-num{color:var(--ac)}
+.gt-tab-label{font-size:9px;color:var(--mt);line-height:1.2;text-align:center}
+.gt-tab.active .gt-tab-label{color:var(--tx)}
+
+.gt-phase{display:none}
+.gt-phase.active{display:block}
+.gt-phase-header{background:var(--dk);padding:18px 26px;border-left:4px solid var(--ac);
+  display:flex;align-items:center;gap:14px;border-radius:5px 5px 0 0}
+.gt-phase-icon{font-size:24px}
+.gt-phase-num{font-family:'Cormorant Garamond',serif;font-size:10px;color:var(--ac);letter-spacing:0.25em;font-weight:700}
+.gt-phase-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--iv);font-weight:600}
+.gt-phase-sub{font-size:10px;color:var(--ac);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px}
+.gt-phase-content{padding:4px 26px 22px;background:var(--iv);border-radius:0 0 5px 5px;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+
+.gt-section{margin-top:18px}
+.gt-section-title{font-family:'Cormorant Garamond',serif;font-size:11px;color:var(--br);font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;padding:7px 12px;background:var(--cr);
+  border-left:3px solid var(--go);margin-bottom:10px}
+
+.gt-check-item{margin-bottom:14px}
+.gt-check-row{display:flex;align-items:flex-start;gap:9px;padding:5px 8px 3px;cursor:pointer;
+  border-radius:4px;transition:background .15s;border-left:3px solid transparent}
+.gt-check-row:hover{background:var(--cr)}
+.gt-check-row.checked{background:#fdf8ee;border-left-color:var(--go)}
+.gt-checkbox{width:15px;height:15px;border:1.5px solid var(--sd);border-radius:3px;flex-shrink:0;margin-top:2px;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;background:white}
+.gt-check-row.checked .gt-checkbox{background:var(--go);border-color:var(--go)}
+.gt-checkbox-tick{display:none;color:white;font-size:9px;font-weight:700}
+.gt-check-row.checked .gt-checkbox-tick{display:block}
+.gt-check-text{font-size:11.5px;line-height:1.55;color:var(--dk)}
+.gt-check-row.checked .gt-check-text{color:#a08060;text-decoration:line-through}
+
+.gt-write-area{margin:4px 0 0 32px}
+.gt-write-input{width:100%;border:none;border-bottom:1px solid var(--sd);background:transparent;
+  font-family:'Jost',sans-serif;font-size:11.5px;color:var(--dk);padding:4px 4px 3px;outline:none;
+  resize:none;display:block;line-height:1.5;margin-bottom:5px;min-height:22px;transition:border-color .15s}
+.gt-write-input:focus{border-bottom-color:var(--go);background:#fdf8ee}
+.gt-write-input::placeholder{color:#c8b898;font-style:italic;font-size:10.5px}
+
+.gt-photo-item{margin-bottom:12px}
+.gt-photo-row{display:flex;align-items:flex-start;gap:9px;padding:8px 12px 6px;background:var(--bg-note,#faf7f2);
+  border:1px solid var(--sd);border-radius:4px;cursor:pointer;transition:all .15s}
+.gt-photo-row:hover{border-color:var(--go)}
+.gt-photo-row.taken{background:#fdf8ee;border-color:var(--go)}
+.gt-photo-cam{font-size:15px;flex-shrink:0;margin-top:1px;width:24px;text-align:center}
+.gt-photo-shot{font-family:'Cormorant Garamond',serif;font-size:12.5px;color:var(--dk);font-weight:600;margin-bottom:2px}
+.gt-photo-row.taken .gt-photo-shot{color:#a08060}
+.gt-photo-note-text{font-size:9.5px;color:var(--br);font-style:italic}
+
+.gt-notes-block{background:#faf7f2;border:1px solid var(--sd);border-radius:4px;padding:12px 16px}
+.gt-note-item{margin-bottom:14px}
+.gt-note-item:last-child{margin-bottom:0}
+.gt-note-row{display:flex;align-items:flex-start;gap:8px;padding-bottom:5px;border-bottom:1px solid var(--sd);margin-bottom:5px}
+.gt-note-diamond{color:var(--go);font-size:10px;flex-shrink:0;margin-top:3px}
+.gt-note-text{font-size:11.5px;color:var(--dk);line-height:1.5;font-weight:500}
+
+.gt-doc-footer{background:var(--dk);padding:12px 26px;text-align:center;border-top:3px solid var(--ac);
+  border-radius:0 0 5px 5px;margin-top:-5px}
+.gt-doc-footer span{font-family:'Cormorant Garamond',serif;font-size:9px;color:var(--mt);letter-spacing:0.25em}
+
 /* PRINT */
 @media print{
-  .topnav,.sidebar,.preview-bar,.offre-actions,.rep-filters,.rep-stats{display:none!important}
+  .topnav,.sidebar,.preview-bar,.offre-actions,.rep-filters,.rep-stats,.gt-tabs{display:none!important}
   .app-body{display:block}
   .panel{display:block!important}
   .panel:not(.active){display:none!important}
   .content{padding:0;overflow:visible}
   #moodboard,.offre-doc{box-shadow:none;max-width:100%}
+  #panel-guide .gt-phase{display:block!important;page-break-before:always}
+  #panel-guide .gt-phase:first-of-type{page-break-before:auto}
+  #panel-guide .gt-phase-content{box-shadow:none}
   body{background:white}
 }
 </style>
@@ -304,6 +377,7 @@ textarea{min-height:58px}
   <div class="nav-tabs">
     <div class="nav-tab active" data-tab="moodboard" role="button" onclick="showPanel('moodboard')"><span class="tab-icon">🎨</span> Moodboard</div>
     <div class="nav-tab" data-tab="audit" role="button" onclick="showPanel('audit')"><span class="tab-icon">📋</span> Audit Terrain</div>
+    <div class="nav-tab" data-tab="guide" role="button" onclick="showPanel('guide')"><span class="tab-icon">🧭</span> Guide Terrain</div>
     <div class="nav-tab" data-tab="offre" role="button" onclick="showPanel('offre')"><span class="tab-icon">📄</span> Offre & Tarifs</div>
     <div class="nav-tab" data-tab="repertoire" role="button" onclick="showPanel('repertoire')"><span class="tab-icon">🏨</span> Répertoire Hôtels</div>
     <div class="nav-tab" data-tab="strategie" role="button" onclick="showPanel('strategie')"><span class="tab-icon">🎯</span> Stratégie & Objections</div>
@@ -696,6 +770,186 @@ textarea{min-height:58px}
   </div>
 </div>
 
+<div class="panel" id="panel-guide">
+  <div class="content" style="padding:0;overflow-y:auto">
+  <div class="gt-wrap">
+
+    <div style="text-align:center;padding:24px 0 20px">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--ac);margin-bottom:6px">Guide Terrain Audit Buffet</div>
+      <div style="font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mt)">Aapiti Consulting · Grille d'observation complète en 3 phases</div>
+    </div>
+
+    <div class="gt-tabs">
+      <div class="gt-tab active" data-phase="gt-p01"><span class="gt-tab-icon">🍳</span><span class="gt-tab-num">01</span><span class="gt-tab-label">Avant le<br>buffet</span></div>
+      <div class="gt-tab" data-phase="gt-p02"><span class="gt-tab-icon">✦</span><span class="gt-tab-num">02</span><span class="gt-tab-label">Pendant le<br>dressage</span></div>
+      <div class="gt-tab" data-phase="gt-p03"><span class="gt-tab-icon">◈</span><span class="gt-tab-num">03</span><span class="gt-tab-label">Pendant &<br>après</span></div>
+    </div>
+
+    <!-- PHASE 01 -->
+    <div class="gt-phase active" id="gt-p01">
+      <div class="gt-phase-header"><span class="gt-phase-icon">🍳</span><div><div class="gt-phase-num">PHASE 01</div><div class="gt-phase-title">Avant le buffet</div><div class="gt-phase-sub">En cuisine · Briefing équipe</div></div></div>
+      <div class="gt-phase-content">
+
+        <div class="gt-section">
+          <div class="gt-section-title">✓ À observer avec l'équipe cuisine</div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Organisation de la mise en place : qui fait quoi, qui est responsable de quel îlot</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Briefing du Chef avant démarrage : y a-t-il un brief qualité/visuel, ou juste fonctionnel ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Connaissance des produits par l'équipe : savent-ils expliquer un produit local, une préparation ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Présence d'une fiche de dressage ou d'un schéma de buffet de référence</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Stock et approvisionnement : les produits sont-ils prêts à temps, en quantité suffisante ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Condition de stockage en chambre froide / présentation des ingrédients avant dressage</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Utilisation des restes de la veille : recyclage ou gaspillage visible ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Coordination entre les postes (chaud, froid, pâtisserie, fruits…)</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Ambiance et leadership du Chef de partie : tension, désorganisation ou fluidité ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Connaissance des allergènes et régimes spéciaux par le personnel</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+        </div>
+
+        <div class="gt-section">
+          <div class="gt-section-title">📷 Photos à prendre en cuisine</div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Vue d'ensemble de la cuisine avant démarrage</div><div class="gt-photo-note-text">→ Organisation générale, propreté</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Plans de travail avec produits préparés</div><div class="gt-photo-note-text">→ Mise en place, découpes, bols de service</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Chambre froide ou zone de stockage visible</div><div class="gt-photo-note-text">→ Quantités, conditions, fraîcheur</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Fiches de recettes / schémas de buffet s'ils existent</div><div class="gt-photo-note-text">→ Preuves de process ou absence de process</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Matériels de présentation disponibles</div><div class="gt-photo-note-text">→ Présentoirs, contenants, déco — ce qui est à disposition</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Le Chef ou responsable donnant les consignes</div><div class="gt-photo-note-text">→ Si possible discrètement — posture managériale</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+        </div>
+
+        <div class="gt-section">
+          <div class="gt-section-title">📝 Notes à consigner immédiatement</div>
+          <div class="gt-notes-block">
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Heure d'arrivée en cuisine & heure prévue d'ouverture du buffet</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Nombre de personnes dans l'équipe affectée au buffet</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Thématique ou concept prévu (le cas échéant)</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Problèmes observés avant même la mise en place</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="gt-doc-footer"><span>Aapiti Consulting · Blooming Life Ltd · Mauritius</span></div>
+    </div>
+
+    <!-- PHASE 02 -->
+    <div class="gt-phase" id="gt-p02">
+      <div class="gt-phase-header"><span class="gt-phase-icon">✦</span><div><div class="gt-phase-num">PHASE 02</div><div class="gt-phase-title">Pendant le dressage</div><div class="gt-phase-sub">Réalisation buffet · Mise en scène</div></div></div>
+      <div class="gt-phase-content">
+
+        <div class="gt-section">
+          <div class="gt-section-title">✓ À observer pendant le dressage</div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Rapidité et efficacité du montage : le buffet est-il prêt à l'heure d'ouverture ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Gestion des hauteurs et volumes : y a-t-il une intention de relief ou tout est déposé à plat ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Choix des contenants : cohérence des matières (céramique, ardoise, bois, inox, plastique…)</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Soin apporté à la disposition des produits : alignement, symétrie, composition ou déposé sans soin ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Étiquettes et signalétique : sont-elles préparées à l'avance, posées avec soin, lisibles ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Éléments de décoration : fleurs, feuilles, bougies, props… ou aucun élément d'ambiance ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Cohérence de l'ensemble : y a-t-il une identité visuelle, une palette de couleurs, un fil conducteur ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Comportement des cuisiniers lors du dressage : attentifs au rendu ou focalisés uniquement sur la quantité ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Gestion des zones chaudes vs froides : les chafing dishes sont-ils en chauffe correctement ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Respect des règles d'hygiène pendant le dressage : gants, tongs, protection des produits</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Dernier regard du Chef avant ouverture : y a-t-il une validation esthétique ou juste fonctionnelle ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+        </div>
+
+        <div class="gt-section">
+          <div class="gt-section-title">📷 Photos à prendre pendant le dressage</div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Le buffet vide avant toute installation</div><div class="gt-photo-note-text">→ Structure de base, longueur, mobilier</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Progression du dressage (3 étapes si possible)</div><div class="gt-photo-note-text">→ Montrer l'évolution : avant / en cours / terminé</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Gros plan sur les contenants et matières utilisés</div><div class="gt-photo-note-text">→ Cohérence ou mélange incohérent ?</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Travail sur les hauteurs et volumes</div><div class="gt-photo-note-text">→ Présentoirs, caisses, éléments surélevés ou absence totale</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Étiquettes et signalétique posées sur le buffet</div><div class="gt-photo-note-text">→ Lisibilité, qualité, esthétique</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Zone la plus réussie visuellement</div><div class="gt-photo-note-text">→ Le meilleur angle de l'ensemble fini</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Zone la plus problématique</div><div class="gt-photo-note-text">→ Manque de soin, surcharge, vide, incohérence</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Détail d'un produit bien ou mal mis en valeur</div><div class="gt-photo-note-text">→ Gros plan : étiquette, garniture, contenant</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Vue d'ensemble du buffet complet avant ouverture</div><div class="gt-photo-note-text">→ Grand angle, idéalement en légère hauteur</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Angle client : ce que l'on voit en entrant dans la salle</div><div class="gt-photo-note-text">→ Première impression depuis l'entrée</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+        </div>
+
+        <div class="gt-section">
+          <div class="gt-section-title">📝 Notes à consigner immédiatement</div>
+          <div class="gt-notes-block">
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Durée totale du dressage (heure de début → heure d'ouverture)</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Éléments de déco prévus vs réellement utilisés</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Produits signature ou locaux mis en avant (ou absents)</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Points forts visuels à retenir pour la proposition Aapiti</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Points faibles criants à mentionner dans le rapport</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="gt-doc-footer"><span>Aapiti Consulting · Blooming Life Ltd · Mauritius</span></div>
+    </div>
+
+    <!-- PHASE 03 -->
+    <div class="gt-phase" id="gt-p03">
+      <div class="gt-phase-header"><span class="gt-phase-icon">◈</span><div><div class="gt-phase-num">PHASE 03</div><div class="gt-phase-title">Pendant & après le service</div><div class="gt-phase-sub">Flux client · Expérience · Réapprovisionnement</div></div></div>
+      <div class="gt-phase-content">
+
+        <div class="gt-section">
+          <div class="gt-section-title">✓ Flux & circulation client</div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Point d'entrée dans la salle : le client est-il orienté naturellement vers le buffet ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Sens de circulation : y a-t-il un parcours logique ou des bouchons se forment-ils ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Zones de congestion : certaines stations créent-elles des embouteillages (œufs chauds, pain…) ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Largeur des allées entre les îlots : circulation fluide ou inconfortable ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Signalétique directionnelle : les clients trouvent-ils facilement ce qu'ils cherchent ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Positionnement du personnel de service : visible, accessible, ou invisible ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Gestion des assiettes propres et des couverts : facilement accessibles sur tout le parcours ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Points de boissons : bien répartis ou concentrés en un seul endroit créant de l'attente ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+        </div>
+
+        <div class="gt-section">
+          <div class="gt-section-title">✓ Expérience client & émotion</div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Première impression à l'entrée dans la salle : effet waouh, indifférence, déception ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Réaction des clients devant le buffet : s'arrêtent-ils, photographient-ils, commentent-ils ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Interaction avec le personnel : le staff engage-t-il la conversation, conseille-t-il des produits ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Valorisation des produits locaux : sont-ils reconnus, expliqués, mis en avant auprès des clients ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Ambiance sonore et sensorielle : musique, lumière, odeurs — cohérents avec le standing ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Taux de retour au buffet : les clients reviennent-ils se resservir, ou un seul passage ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Commentaires clients captés (spontanés ou à l'écoute active) : positifs, négatifs, indifférents</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Perception de la valeur : le buffet correspond-il visuellement au tarif / au positionnement de l'hôtel ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Présence d'un élément mémorable ou signature : quelque chose d'unique qu'on ne retrouve pas ailleurs</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+        </div>
+
+        <div class="gt-section">
+          <div class="gt-section-title">✓ Réapprovisionnement & gestion live</div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Fréquence de passage de l'équipe pour réapprovisionner</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Rapidité de réaction quand un bac est vide ou un produit manque</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Qualité du réapprovisionnement : le produit est-il redressé avec soin ou juste déposé ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Gestion des produits en fin de service : retirés proprement ou laissés desséchés/dégradés ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Nettoyage des zones de service en cours de buffet : bavures, miettes, projections prises en charge ?</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          <div class="gt-check-item"><div class="gt-check-row"><div class="gt-checkbox"><span class="gt-checkbox-tick">✓</span></div><span class="gt-check-text">Remplacement des contenants salis ou chafing dishes sans eau</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Observation…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+        </div>
+
+        <div class="gt-section">
+          <div class="gt-section-title">📷 Photos à prendre pendant et après le service</div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Le buffet en plein service avec clients</div><div class="gt-photo-note-text">→ Ambiance réelle, flux, animation — depuis un angle discret</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Zone de congestion ou point de friction identifié</div><div class="gt-photo-note-text">→ Bouchon, vide, manque de place</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">État du buffet 30 min après ouverture</div><div class="gt-photo-note-text">→ Réapprovisionnement réel, dégradation ou maintien de la qualité ?</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">État du buffet en fin de service</div><div class="gt-photo-note-text">→ Produits restants, présentation dégradée, nettoyage en cours</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Interaction staff / client si possible discrètement</div><div class="gt-photo-note-text">→ Posture, engagement, indifférence</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Client photographiant le buffet (si ça arrive)</div><div class="gt-photo-note-text">→ Signal d'effet waouh authentique</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Signalétique et étiquettes en cours de service</div><div class="gt-photo-note-text">→ Sont-elles encore lisibles, bien en place ?</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+          <div class="gt-photo-item"><div class="gt-photo-row"><span class="gt-photo-cam">📷</span><div><div class="gt-photo-shot">Vue depuis la place assise d'un client</div><div class="gt-photo-note-text">→ Que voit-on en mangeant ? Esthétique de salle ?</div></div></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="Note…"></textarea></div></div>
+        </div>
+
+        <div class="gt-section">
+          <div class="gt-section-title">📝 Notes à consigner en fin de visite</div>
+          <div class="gt-notes-block">
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Heure d'ouverture réelle vs annoncée</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Nombre de couverts estimés pendant l'observation</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Incidents ou problèmes observés pendant le service</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">3 points forts à valoriser dans le rapport</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">3 axes de transformation prioritaires à proposer</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Opportunités de grazing identifiées (stations, produits, moments)</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+            <div class="gt-note-item"><div class="gt-note-row"><span class="gt-note-diamond">◆</span><span class="gt-note-text">Niveau d'ouverture perçu de l'équipe / du management à évoluer</span></div><div class="gt-write-area"><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea><textarea class="gt-write-input" rows="1" placeholder="…"></textarea></div></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="gt-doc-footer"><span>Aapiti Consulting · Blooming Life Ltd · Mauritius</span></div>
+    </div>
+
+  </div>
+  </div>
+</div>
+
 </div><!-- /app-body -->
 
 <script>
@@ -848,6 +1102,7 @@ let S={
   contact:"virginie.dcml@gmail.com · +230 57 83 78 22",
   hotelName:"Hôtellerie 5★ · Île Maurice",hotelSub:"Fraîcheur & Éveil",
   auditScores:{},auditFormats:[],zoneFilter:"all",
+  guide:{checks:{},photos:{},notes:{}},
 };
 
 // ═══════════════════════════════════════════════════════════
@@ -1254,6 +1509,68 @@ function toggleObj(el){
 }
 
 // ═══════════════════════════════════════════════════════════
+// GUIDE TERRAIN
+// ═══════════════════════════════════════════════════════════
+function showGuidePhase(id){
+  document.querySelectorAll('#panel-guide .gt-phase').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#panel-guide .gt-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`#panel-guide .gt-tab[data-phase="${id}"]`).classList.add('active');
+}
+
+function autoResizeGT(el){
+  el.style.height='auto';
+  el.style.height=el.scrollHeight+'px';
+}
+
+function initGuide(){
+  const panel=document.getElementById('panel-guide');
+  if(!panel)return;
+  if(!S.guide)S.guide={checks:{},photos:{},notes:{}};
+
+  panel.querySelectorAll('.gt-tab').forEach(t=>{
+    t.addEventListener('click',()=>showGuidePhase(t.dataset.phase));
+  });
+
+  let ci=0;
+  panel.querySelectorAll('.gt-check-row').forEach(row=>{
+    const gid='c'+(ci++);
+    if(S.guide.checks[gid])row.classList.add('checked');
+    row.addEventListener('click',()=>{
+      row.classList.toggle('checked');
+      S.guide.checks[gid]=row.classList.contains('checked');
+      saveStateDebounced();
+    });
+  });
+
+  let pi=0;
+  panel.querySelectorAll('.gt-photo-row').forEach(row=>{
+    const gid='p'+(pi++);
+    const cam=row.querySelector('.gt-photo-cam');
+    if(S.guide.photos[gid]){row.classList.add('taken');cam.textContent='✓';}
+    row.addEventListener('click',()=>{
+      row.classList.toggle('taken');
+      const taken=row.classList.contains('taken');
+      cam.textContent=taken?'✓':'📷';
+      S.guide.photos[gid]=taken;
+      saveStateDebounced();
+    });
+  });
+
+  let ti=0;
+  panel.querySelectorAll('.gt-write-input').forEach(ta=>{
+    const gid='t'+(ti++);
+    if(S.guide.notes[gid]){ta.value=S.guide.notes[gid];}
+    autoResizeGT(ta);
+    ta.addEventListener('input',()=>{
+      S.guide.notes[gid]=ta.value;
+      autoResizeGT(ta);
+      saveStateDebounced();
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
 // ENTER KEY on add inputs
 // ═══════════════════════════════════════════════════════════
 document.addEventListener('keydown',e=>{
@@ -1274,6 +1591,7 @@ initAudit();
 restoreAuditUI();
 initRepertoire();
 initStrategie();
+initGuide();
 
 // Sauvegarde auto sur toute saisie libre (Offre & Tarifs, notes d'audit, etc.)
 document.addEventListener('input',saveStateDebounced);
