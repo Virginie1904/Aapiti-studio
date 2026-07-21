@@ -77,6 +77,10 @@ textarea{min-height:58px}
 /* item rows */
 .item-row{display:flex;align-items:center;gap:6px;padding:5px 8px;background:rgba(255,255,255,.025);border:1px solid var(--bd);border-radius:3px;margin-bottom:4px}
 .item-row .il{flex:1;font-size:10.5px;cursor:pointer;line-height:1.3}
+.item-row .il-edit{flex:1;font-size:10.5px;line-height:1.3;background:transparent;border:none;
+  border-bottom:1px solid transparent;color:var(--tx);padding:2px 1px;font-family:inherit;min-width:0}
+.item-row .il-edit:focus{border-bottom-color:var(--ac);outline:none}
+.item-row .il-edit:hover{border-bottom-color:var(--bd)}
 .item-row input[type=checkbox]{accent-color:var(--ac);cursor:pointer}
 .item-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .del-btn{font-size:11px;color:var(--mt);cursor:pointer;padding:0 3px;transition:color .2s;flex-shrink:0}
@@ -130,6 +134,7 @@ textarea{min-height:58px}
 .mb-kw{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--mi)}
 .mb-kw-dot{width:3px;height:3px;border-radius:50%;background:var(--go)}
 .mb-grid{display:grid;gap:8px;margin-bottom:12px;grid-template-columns:1fr 1fr 1fr;grid-template-rows:220px 175px 155px}
+.mb-grid-extra{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));grid-template-rows:none;grid-auto-rows:160px;display:none}
 .mb-slot{border-radius:3px;overflow:hidden;position:relative;background:var(--cr);display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px dashed transparent;transition:border-color .2s}
 .mb-slot:hover{border-color:var(--go)}
 .mb-slot img{width:100%;height:100%;object-fit:cover;display:block}
@@ -470,6 +475,7 @@ textarea{min-height:58px}
       <h3>Cases photo</h3>
       <p style="font-size:9.5px;color:var(--mt);margin-bottom:8px;line-height:1.5">Cliquez l'icône photo d'une case pour y charger votre image.</p>
       <div id="slotEd"></div>
+      <button class="btn btn-outline btn-block" style="margin-top:6px" onclick="addSlot()">+ Ajouter une case photo</button>
     </div>
     <div class="sb-section">
       <h3>Éléments du buffet</h3>
@@ -482,10 +488,16 @@ textarea{min-height:58px}
       <div class="add-row"><input type="text" id="newTech" placeholder="Ajouter…"><button class="btn btn-outline" onclick="addTech()">+</button></div>
     </div>
     <div class="sb-section">
+      <h3>Spécifications</h3>
+      <div class="mb8"><label>Structure</label><input type="text" id="structure" value="3 niveaux · +0 / +15 / +30 cm"></div>
+      <div class="mb8"><label>Végétal</label><input type="text" id="vegetal" value="Feuilles bananier · Fleurs comestibles"></div>
+      <div><label>Matières</label><input type="text" id="matieres" value="Lin · Céramique · Laiton · Rotin"></div>
+    </div>
+    <div class="sb-section">
       <h3>Textes</h3>
       <div class="mb8"><label>Mots-clés (séparés par ·)</label><input type="text" id="keywords" value="Lumière dorée · Légèreté · Fraîcheur mauricienne · Photographiable"></div>
       <div class="mb8"><label>Citation</label><textarea id="quote">Donner envie de commencer la journée avec légèreté et identité mauricienne</textarea></div>
-      <div><label>Contact pied de page</label><input type="text" id="contact" value="virginie.dcml@gmail.com · +230 57 83 78 22"></div>
+      <div><label>Contact pied de page</label><input type="text" id="contact" value="virginie@aapiti.fr · +230 57 83 78 22"></div>
     </div>
     <div class="sb-section">
       <button class="btn btn-primary btn-block" onclick="applyAll()">✦ Mettre à jour</button>
@@ -521,13 +533,14 @@ textarea{min-height:58px}
       </div>
       <div class="mb-kws" id="mbKws"></div>
       <div class="mb-grid" id="mbGrid"></div>
+      <div class="mb-grid mb-grid-extra" id="mbGridExtra"></div>
       <div class="mb-pal-row"><span class="mb-pal-ttl">Palette chromatique</span><div class="mb-swatches" id="mbSwatches"></div></div>
       <div class="mb-quote"><p id="mbQuote"></p></div>
       <div class="mb-specs">
-        <div class="mb-spec"><span class="mb-spec-icon">📐</span><span class="mb-spec-ttl">Structure</span><span class="mb-spec-val">3 niveaux · +0 / +15 / +30 cm</span></div>
+        <div class="mb-spec"><span class="mb-spec-icon">📐</span><span class="mb-spec-ttl">Structure</span><span class="mb-spec-val" id="mbSpecStructure">3 niveaux · +0 / +15 / +30 cm</span></div>
         <div class="mb-spec"><span class="mb-spec-icon">🎨</span><span class="mb-spec-ttl">Palette</span><span class="mb-spec-val" id="mbSpecPal">Ivoire · Or · Sauge</span></div>
-        <div class="mb-spec"><span class="mb-spec-icon">🌿</span><span class="mb-spec-ttl">Végétal</span><span class="mb-spec-val">Feuilles bananier · Fleurs comestibles</span></div>
-        <div class="mb-spec"><span class="mb-spec-icon">✦</span><span class="mb-spec-ttl">Matières</span><span class="mb-spec-val">Lin · Céramique · Laiton · Rotin</span></div>
+        <div class="mb-spec"><span class="mb-spec-icon">🌿</span><span class="mb-spec-ttl">Végétal</span><span class="mb-spec-val" id="mbSpecVegetal">Feuilles bananier · Fleurs comestibles</span></div>
+        <div class="mb-spec"><span class="mb-spec-icon">✦</span><span class="mb-spec-ttl">Matières</span><span class="mb-spec-val" id="mbSpecMatieres">Lin · Céramique · Laiton · Rotin</span></div>
       </div>
       <div class="mb-notes">
         <div class="mb-note"><h4 id="note1ttl">Éléments du buffet</h4><ul id="note1list"></ul></div>
@@ -719,7 +732,7 @@ textarea{min-height:58px}
       <div class="offre-section">
         <h2>Prochaine étape</h2>
         <p>Je serais ravie d'échanger avec vous autour d'un café ou d'un appel de 20 minutes.<br><br>
-        <strong>virginie.dcml@gmail.com · +230 57 83 78 22 · www.aapiti.fr</strong><br><br>
+        <strong>virginie@aapiti.fr · +230 57 83 78 22 · www.aapiti.fr</strong><br><br>
         Dans l'attente de votre retour, je vous adresse mes cordiales salutations.<br><br>
         <em>Virginie Duc Meley · Aapiti Consulting · Scénographie Culinaire · Île Maurice</em></p>
       </div>
@@ -1161,7 +1174,10 @@ let S={
   techs:JSON.parse(JSON.stringify(TECHS_DEF)),
   keywords:"Lumière dorée · Légèreté · Fraîcheur mauricienne · Photographiable",
   quote:"Donner envie de commencer la journée avec légèreté et identité mauricienne",
-  contact:"virginie.dcml@gmail.com · +230 57 83 78 22",
+  contact:"virginie@aapiti.fr · +230 57 83 78 22",
+  structure:"3 niveaux · +0 / +15 / +30 cm",
+  vegetal:"Feuilles bananier · Fleurs comestibles",
+  matieres:"Lin · Céramique · Laiton · Rotin",
   hotelName:"Hôtellerie 5★ · Île Maurice",hotelSub:"Fraîcheur & Éveil",
   auditScores:{},auditFormats:[],zoneFilter:"all",
   guide:{checks:{},photos:{},notes:{}},
@@ -1209,7 +1225,7 @@ function loadState(){
 }
 
 function restoreMoodboardUI(){
-  ['hotelName','hotelSub','keywords','quote','contact'].forEach(id=>{
+  ['hotelName','hotelSub','keywords','quote','contact','structure','vegetal','matieres'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.value=S[id]||'';
   });
   document.querySelectorAll('#momentPills .pill').forEach(p=>p.classList.toggle('active',p.dataset.m===S.moment));
@@ -1262,7 +1278,7 @@ function initMoodboard(){
     });
   });
   // Text inputs
-  ['hotelName','hotelSub','keywords','quote','contact'].forEach(id=>{
+  ['hotelName','hotelSub','keywords','quote','contact','structure','vegetal','matieres'].forEach(id=>{
     document.getElementById(id).addEventListener('input',e=>{S[id]=e.target.value;applyAll();});
   });
   buildSlotEditor(); buildItemsList(); buildTechList();
@@ -1274,11 +1290,23 @@ function buildSlotEditor(){
   S.slots.forEach((sl,i)=>{
     const d=document.createElement('div'); d.className='slot-ed-row';
     d.innerHTML=`<span class="slot-num">${i+1}</span>
-    <div class="slot-ed-info"><input type="text" value="${sl.name}" placeholder="Intitulé…" onchange="S.slots[${i}].name=this.value;renderGrid()"></div>
+    <div class="slot-ed-info"><input type="text" value="${escHTML(sl.name)}" placeholder="Intitulé…" onchange="S.slots[${i}].name=this.value;renderGrid()"></div>
     <div class="slot-thumb" title="Charger une photo">${sl.img?`<img src="${sl.img}">`:(sl.icon||'📷')}
-    <input type="file" accept="image/*" onchange="loadSlot(event,${i})"></div>`;
+    <input type="file" accept="image/*" onchange="loadSlot(event,${i})"></div>
+    <span class="del-btn" onclick="deleteSlot(${i})" title="Supprimer cette case">✕</span>`;
     c.appendChild(d);
   });
+}
+
+function addSlot(){
+  S.slots.push({id:Date.now(),name:'Nouvelle photo',icon:'📷',img:null});
+  buildSlotEditor(); renderGrid(); saveStateDebounced();
+}
+
+function deleteSlot(idx){
+  if(!confirm('Supprimer cette case photo ?'))return;
+  S.slots.splice(idx,1);
+  buildSlotEditor(); renderGrid(); saveState();
 }
 
 function loadSlot(ev,idx){
@@ -1294,7 +1322,7 @@ function buildItemsList(){
     const d=document.createElement('div'); d.className='item-row';
     d.innerHTML=`<div class="item-dot" style="background:${it.color}"></div>
     <input type="checkbox" ${it.on?'checked':''} onchange="S.items[${i}].on=this.checked;applyAll()">
-    <span class="il" onclick="this.previousElementSibling.click()">${it.label}</span>
+    <input type="text" class="il-edit" value="${escHTML(it.label)}" oninput="S.items[${i}].label=this.value;applyAll()">
     <span class="del-btn" onclick="S.items.splice(${i},1);buildItemsList();applyAll()">✕</span>`;
     c.appendChild(d);
   });
@@ -1305,7 +1333,7 @@ function buildTechList(){
   S.techs.forEach((t,i)=>{
     const d=document.createElement('div'); d.className='item-row';
     d.innerHTML=`<input type="checkbox" ${t.on?'checked':''} onchange="S.techs[${i}].on=this.checked;applyAll()">
-    <span class="il" onclick="this.previousElementSibling.click()">${t.label}</span>
+    <input type="text" class="il-edit" value="${escHTML(t.label)}" oninput="S.techs[${i}].label=this.value;applyAll()">
     <span class="del-btn" onclick="S.techs.splice(${i},1);buildTechList();applyAll()">✕</span>`;
     c.appendChild(d);
   });
@@ -1334,6 +1362,9 @@ function applyAll(){
   document.getElementById('mbSwatches').innerHTML=pal.swatches.map(s=>`<div class="mb-sw"><div class="mb-sw-dot" style="background:${s.hex}"></div><div class="mb-sw-name">${s.label.replace('\n','<br>')}</div></div>`).join('');
   // spec palette
   document.getElementById('mbSpecPal').textContent=pal.spec;
+  document.getElementById('mbSpecStructure').textContent=S.structure;
+  document.getElementById('mbSpecVegetal').textContent=S.vegetal;
+  document.getElementById('mbSpecMatieres').textContent=S.matieres;
   // quote
   document.getElementById('mbQuote').textContent=`« ${S.quote} »`;
   // notes
@@ -1353,16 +1384,26 @@ function renderGrid(){
     {col:'1/2',row:'2/3'},{col:'2/3',row:'2/3'},{col:'3/4',row:'2/3'},
     {col:'1/2',row:'3/4'},{col:'2/3',row:'2/4'},{col:'3/4',row:'3/4'},
   ];
-  S.slots.slice(0,8).forEach((sl,i)=>{
-    const lay=layouts[i]||{col:'auto',row:'auto'};
+  const makeSlot=(sl,i,lay)=>{
     const d=document.createElement('div'); d.className='mb-slot';
-    d.style.gridColumn=lay.col; d.style.gridRow=lay.row;
+    if(lay){d.style.gridColumn=lay.col; d.style.gridRow=lay.row;}
     if(sl.img){
       d.innerHTML=`<img src="${sl.img}" alt="${sl.name}"><div class="mb-slot-lbl">${sl.name}</div><input type="file" accept="image/*" onchange="loadSlot(event,${i})">`;
     }else{
       d.innerHTML=`<div class="mb-ph"><div class="mb-ph-icon">${sl.icon}</div><div class="mb-ph-name">${sl.name}</div></div><input type="file" accept="image/*" onchange="loadSlot(event,${i})">`;
     }
-    g.appendChild(d);
+    return d;
+  };
+  S.slots.slice(0,8).forEach((sl,i)=>{
+    g.appendChild(makeSlot(sl,i,layouts[i]));
+  });
+
+  const extra=document.getElementById('mbGridExtra');
+  extra.innerHTML='';
+  const extraSlots=S.slots.slice(8);
+  extra.style.display=extraSlots.length?'grid':'none';
+  extraSlots.forEach((sl,i)=>{
+    extra.appendChild(makeSlot(sl,i+8,null));
   });
 }
 
@@ -1379,7 +1420,7 @@ function loadJSON(ev){
     try{
       const d=JSON.parse(e.target.result);
       Object.assign(S,d);
-      ['hotelName','hotelSub','keywords','quote','contact'].forEach(id=>{
+      ['hotelName','hotelSub','keywords','quote','contact','structure','vegetal','matieres'].forEach(id=>{
         const el=document.getElementById(id); if(el)el.value=S[id]||'';
       });
       document.querySelectorAll('#momentPills .pill').forEach(p=>p.classList.toggle('active',p.dataset.m===S.moment));
@@ -1575,7 +1616,7 @@ function buildAuditReportHTML(){
     ${formatsHTML}
     ${verdictHTML}
 
-    <div class="ar-footer">Aapiti Consulting · Blooming Life Ltd · Île Maurice · virginie.dcml@gmail.com</div>
+    <div class="ar-footer">Aapiti Consulting · Blooming Life Ltd · Île Maurice · virginie@aapiti.fr</div>
   `;
 }
 
@@ -1647,7 +1688,7 @@ function buildAuditBlankHTML(){
       </div>
     </div>
 
-    <div class="ar-footer">Aapiti Consulting · Blooming Life Ltd · Île Maurice · virginie.dcml@gmail.com</div>
+    <div class="ar-footer">Aapiti Consulting · Blooming Life Ltd · Île Maurice · virginie@aapiti.fr</div>
   `;
 }
 
