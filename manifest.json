@@ -2,7 +2,7 @@
   "name": "Aapiti · Studio Pro",
   "short_name": "Aapiti Studio",
   "description": "Outil de consulting F&B — Scénographie & Grazing",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "landscape",
