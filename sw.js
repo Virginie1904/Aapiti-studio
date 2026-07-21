@@ -1,7 +1,6 @@
-const CACHE = 'aapiti-studio-v1';
+const CACHE = 'aapiti-studio-v2';
 const SHELL = [
   './',
-  './index.html',
   './manifest.json',
   './icon-180.png',
   './icon-192.png',
@@ -22,18 +21,31 @@ self.addEventListener('activate', event => {
   );
 });
 
+function cleanResponse(response) {
+  // Safari refuses to use a redirected response for navigation requests
+  // ("response served by service worker has redirections"). Re-fetch the
+  // final URL directly so we always hand back a non-redirected response.
+  if (response.redirected) {
+    return fetch(response.url);
+  }
+  return response;
+}
+
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
     caches.match(event.request).then(cached => {
-      const network = fetch(event.request).then(response => {
-        if (response && response.status === 200) {
-          const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(event.request, copy));
-        }
-        return response;
-      }).catch(() => cached);
+      const network = fetch(event.request)
+        .then(cleanResponse)
+        .then(response => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE).then(cache => cache.put(event.request, copy));
+          }
+          return response;
+        })
+        .catch(() => cached);
       return cached || network;
     })
   );
